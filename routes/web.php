@@ -23,3 +23,5 @@ Route::resource('products', ProductsController::class);
 Route::get('products_ajax',[App\Http\Controllers\ProductsController::class, 'productsAjax']);
 
 Route::get('allproductsjson', [App\Http\Controllers\ProductsController::class, 'allProductsJson']);
+
+Route::get('getcsv', [App\Http\Controllers\ProductsController::class,'exportToCsv']);

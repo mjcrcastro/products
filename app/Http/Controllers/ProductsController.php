@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use DB;
+use Response;
 
 class ProductsController extends Controller {
 
@@ -153,5 +155,27 @@ class ProductsController extends Controller {
         $products = Product::all();
         return response()->json($products);
     }
+    
+    
+        
+    public function exportToCsv() {
+        
+
+            $result = DB::table('products')->get();
+            
+            $handle = fopen("products.csv", 'w+');
+
+            foreach ($result as $row) {
+                
+                fputcsv($handle, (array)$row);  //fputcsv requires array
+                // as second parameter
+            }
+            fclose($handle);
+            $headers = array(
+            'Content-Type' => 'Content-type: text/plain',
+        );
+            return Response::download('products.csv', 'products.csv', $headers );
+        }
+        
     
 }
