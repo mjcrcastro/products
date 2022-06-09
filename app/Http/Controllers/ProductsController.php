@@ -92,12 +92,12 @@ class ProductsController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, Product $product) {
         //
 
         $validator = Validator::make($request->all(), [
-                    'barcode' => ['required', Rule::unique('products')->ignore($id)],
-                    'description' => ['required', Rule::unique('products')->ignore($id)],
+                    'barcode' => ['required', Rule::unique('products')->ignore($product->id)],
+                    'description' => ['required', Rule::unique('products')->ignore($product->id)],
                      'price' => ['required','numeric']
                         ]
         );
@@ -108,7 +108,6 @@ class ProductsController extends Controller {
                             ->withInput();
         }
 
-        $product = Product::find($id);
         $product->update($request->all());
         return redirect()->route('products.index');
     }
@@ -119,7 +118,7 @@ class ProductsController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy(Product $product) {
         //
         Product::find($id)->delete();
         return redirect()->route('products.index');
