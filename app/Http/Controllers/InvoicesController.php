@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Invoice;
-use App\Http\Product;
+use Illuminate\Support\Facades\Log;
+use App\Models\InvoiceDetail;
 
 class InvoicesController extends Controller {
 
@@ -78,22 +79,26 @@ class InvoicesController extends Controller {
     }
 
     public function receiveInvoicesJson(Request $request) {
-
-        foreach ($request as $incomingInvoice) {
+        
+        $data = $request->all();
+        
+        foreach ($data as $incomingInvoice) {
+            
+            Log::info(print_r($incomingInvoice, true));
             
             $newInvoice = new Invoice;
             
-            $newInvoice->invoicenumber_mobile = $incomingInvoice->invoicenumber;
-            $newInvoice->customername = $incomingInvoice->customername;
-            $newInvoice->invoicedate = $incomingInvoice->invoicedate;
-            $newInvoice->invoicetotal = $incomingInvoice->invoicetotal;
+            $newInvoice->invoicenumber_mobile = $incomingInvoice['invoicenumber'];
+            $newInvoice->customername = $incomingInvoice['customername'];
+            $newInvoice->invoicedate = $incomingInvoice['invoicedate'];
+            $newInvoice->invoicetotal = $incomingInvoice['invoicetotal'];
             $newInvoice->save();
             
-            //foreach ($incomingInvoice->products as $itemProduct){
-             //not each product
-                //$newProductItem = new ProductDetail;
-                //$newProduct->
-            //}
+            foreach ($incomingInvoice as $itemProduct){
+                //not each product
+                $invoiceDetail = new InvoiceDetail;
+                //$invoiceDetail
+            }
         }
 
 
