@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Invoice;
+use App\Http\Product;
 
-class InvoicesController extends Controller
-{
+class InvoicesController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -21,8 +22,7 @@ class InvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -32,8 +32,7 @@ class InvoicesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         
     }
 
@@ -43,8 +42,7 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -54,8 +52,7 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -66,8 +63,7 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -77,12 +73,33 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
-    
-    public function receiveInvoicesJson ($request){
-        return $request;
+
+    public function receiveInvoicesJson(Request $request) {
+
+        foreach ($request as $incomingInvoice) {
+            
+            $newInvoice = new Invoice;
+            
+            $newInvoice->invoicenumber_mobile = $incomingInvoice->invoicenumber;
+            $newInvoice->customername = $incomingInvoice->customername;
+            $newInvoice->invoicedate = $incomingInvoice->invoicedate;
+            $newInvoice->invoicetotal = $incomingInvoice->invoicetotal;
+            $newInvoice->save();
+            
+            //foreach ($incomingInvoice->products as $itemProduct){
+             //not each product
+                //$newProductItem = new ProductDetail;
+                //$newProduct->
+            //}
+        }
+
+
+        return response()->json([
+                    "message" => "Invoice record created"
+                        ], 201);
     }
+
 }

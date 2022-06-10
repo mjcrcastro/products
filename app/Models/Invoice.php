@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'invoicenumber_mobile', 
+        'mobile_id', 
+        'customername',
+        'invoicedate',
+        'invoicetotal'
+        
+    ];
 }

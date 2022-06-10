@@ -24,6 +24,4 @@ Route::get('products_ajax',[App\Http\Controllers\ProductsController::class, 'pro
 
 Route::get('allproductsjson', [App\Http\Controllers\ProductsController::class, 'allProductsJson']);
 
-Route::post('receiveinvoicesjson', [App\Http\Controllers\InvoicesController::class, 'receiveInvoicesJson']);
-
 Route::get('getcsv', [App\Http\Controllers\ProductsController::class,'exportToCsv']);
