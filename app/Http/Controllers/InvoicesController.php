@@ -83,11 +83,11 @@ class InvoicesController extends Controller {
 
     public function receiveInvoicesJson(Request $request) {
 
-        DB::beginTransaction();
+        DB::beginTransaction(); //will rollback in case of failure
 
         $data = $request->json()->all();
         
-        Log::info(print_r($data, true));
+        //Log::info(print_r($data, true));
         
         if ($this->validInvoiceHeader($data)) {
             $newInvoice = $this->createInvoiceHeader($data);
@@ -107,7 +107,7 @@ class InvoicesController extends Controller {
                 return $this->jsonInvalidDetail($invoiceDetail);
             }
         }
-
+        DB::commit();
         return $this->jsonInvoiceStored($newInvoice);
     }
 
@@ -157,14 +157,14 @@ class InvoicesController extends Controller {
     private function jsonInvalidHeader($newInvoice) {
         return response()->json([
                     "message" => "Invalid Invoice Header",
-                    "invoice" => $newInvoice,
+                    "object" => $newInvoice,
                         ], 400);
     }
 
     private function jsonInvalidDetail($invoiceDetail) {
         return response()->json([
                     "message" => "Invalid Invoice detail",
-                    "invoice_detail" => $invoiceDetail,
+                    "object" => $invoiceDetail,
                         ], 400);
     }
 
