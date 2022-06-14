@@ -19,3 +19,5 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::post('invoice', [App\Http\Controllers\InvoicesController::class, 'receiveInvoicesJson']);
+
+Route::post('safetodelete', [App\Http\Controllers\InvoicesController::class, 'safeToDeleteInvoice']);

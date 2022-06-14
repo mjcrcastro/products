@@ -16,5 +16,9 @@ class Product extends Model {
         'barcode' => 'required|unique:products,description,null,{{$id}}',
         'description' => 'required|unique:products,description,null,{{$id}}'
     );
+    
+    public function invoiceDetails() {
+        return $this->hasMany(InvoiceDetail::class);
+    }
 
 }

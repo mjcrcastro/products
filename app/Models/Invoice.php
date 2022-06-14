@@ -17,4 +17,8 @@ class Invoice extends Model
         'invoicetotal'
         
     ];
+    
+    public function invoiceDetails() {
+        return $this->hasMany(InvoiceDetail::class);
+    }
 }

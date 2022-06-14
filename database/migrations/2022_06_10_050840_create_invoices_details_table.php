@@ -13,9 +13,10 @@ class CreateInvoicesDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices_details', function (Blueprint $table) {
+        Schema::create('invoice_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product_id');
+            $table->integer('invoice_id')->references('id')->on('invoices');
+            $table->integer('product_id')->references('id')->on('products');
             $table->double('amount');
             $table->double('price');
             $table->timestamps();
@@ -29,6 +30,6 @@ class CreateInvoicesDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices_details');
+        Schema::dropIfExists('invoice_details');
     }
 }
