@@ -14,7 +14,7 @@ class CreateInvoicesDetailsTable extends Migration
     public function up()
     {
         Schema::create('invoice_details', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('invoice_id')->references('id')->on('invoices');
             $table->integer('product_id')->references('id')->on('products');
             $table->double('amount');

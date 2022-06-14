@@ -7,6 +7,8 @@ use App\Models\Invoice;
 use Illuminate\Support\Facades\Log;
 use App\Models\InvoiceDetail;
 use App\Models\Product;
+use Illuminate\Support\Facades\Validator;
+use DB;
 
 class InvoicesController extends Controller {
 
@@ -81,44 +83,96 @@ class InvoicesController extends Controller {
 
     public function receiveInvoicesJson(Request $request) {
 
+        DB::beginTransaction();
+
         $data = $request->json()->all();
-
-            Log::info(print_r($data, true)); 
-            
-            $newInvoice = new Invoice;
-            $newInvoice->invoicenumber_mobile = $data['invoicenumber'];
-            $newInvoice->customername = $data['customername'];
-            $newInvoice->invoicedate = $data['invoicedate'];
-            $newInvoice->invoicetotal = $data['invoicetotal'];
+        
+        Log::info(print_r($data, true));
+        
+        if ($this->validInvoiceHeader($data)) {
+            $newInvoice = $this->createInvoiceHeader($data);
             $newInvoice->save();
+        } else {
+            DB::rollback();
+            return $this->jsonInvalidHeader($newInvoice);
+        }
 
-            foreach ($data['products'] as $itemProduct) {
-                //add purchased products to the detail of the invoice
-
-                $invoiceDetail = new InvoiceDetail;
-                $invoiceDetail->invoice_id = $newInvoice->id;
-                $invoiceDetail->product_id = Product::where('barcode', $itemProduct['barcode'])->first()->id;
-                $invoiceDetail->amount = $itemProduct['amount'];
-                $invoiceDetail->price = $itemProduct['price'];
+        foreach ($data['products'] as $invoiceDetail) {
+            //add purchased products to the detail of the invoice
+            if ($this->validInvoiceDetail($invoiceDetail)) {
+                $invoiceDetail = $this->createInvoiceDetail($invoiceDetail, $newInvoice->id);
                 $invoiceDetail->save();
+            } else {
+                DB::rollback();
+                return $this->jsonInvalidDetail($invoiceDetail);
             }
-            
-            $validator = Validator::make($request->all(), [
-                    'barcode' => ['required', Rule::unique('products')],
-                    'description' => ['required', Rule::unique('products')],
-                    'price' => ['required','numeric']
+        }
+
+        return $this->jsonInvoiceStored($newInvoice);
+    }
+
+    private function createInvoiceHeader($data) {
+        $newInvoice = new Invoice;
+        $newInvoice->invoicenumber_mobile = $data['invoicenumber'];
+        $newInvoice->customername = $data['customername'];
+        $newInvoice->invoicedate = $data['invoicedate'];
+        $newInvoice->invoicetotal = $data['invoicetotal'];
+
+        return $newInvoice;
+    }
+
+    private function createInvoiceDetail($itemProduct, $invoiceId) {
+        $invoiceDetail = new InvoiceDetail;
+        $invoiceDetail->invoice_id = $invoiceId;
+        $invoiceDetail->product_id = Product::where('barcode', $itemProduct['barcode'])->first()->id;
+        $invoiceDetail->amount = $itemProduct['amount'];
+        $invoiceDetail->price = $itemProduct['price'];
+        return $invoiceDetail;
+    }
+
+    private function validInvoiceHeader($data) {
+        $invoiceValidator = Validator::make($data, [
+                    'inovicenumber_mobile' => 'required',
+                    'customername' => 'required',
+                    'invoicedate' => 'required',
+                    'invoicetotal' => 'required'
                         ]
         );
 
-        if ($validator->fails()) {
-            return redirect()->route('products.create')
-                            ->withErrors($validator)
-                            ->withInput();
-        }
+        return $invoiceValidator->fails();
+    }
 
+    private function validInvoiceDetail($invoiceDetail) {
+        $productValidator = Validator::make($invoiceDetail, [
+                    'barcode' => 'required',
+                    'product_id' => 'required',
+                    'amount' => 'required',
+                    'price' => 'required'
+                        ]
+        );
+
+        return $productValidator->fails();
+    }
+
+    private function jsonInvalidHeader($newInvoice) {
+        return response()->json([
+                    "message" => "Invalid Invoice Header",
+                    "invoice" => $newInvoice,
+                        ], 400);
+    }
+
+    private function jsonInvalidDetail($invoiceDetail) {
+        return response()->json([
+                    "message" => "Invalid Invoice detail",
+                    "invoice_detail" => $invoiceDetail,
+                        ], 400);
+    }
+
+    private function jsonInvoiceStored($newInvoice) {
         return response()->json([
                     "message" => "Invoice record created",
-                    "invoiceNum"=>$newInvoice->invoicenumber_mobile
+                    "invoiceNum" => $newInvoice->invoicenumber_mobile
                         ], 201);
     }
+
 }
