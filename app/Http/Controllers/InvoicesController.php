@@ -18,7 +18,8 @@ class InvoicesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        //
+          //Shows list of invoices, data is handled by a datatables via Json
+        return view('invoices.index');
     }
 
     /**
@@ -46,8 +47,9 @@ class InvoicesController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show(Invoice $invoice) {
         //
+        return view('invoices.show', compact('invoice'));
     }
 
     /**
@@ -77,9 +79,39 @@ class InvoicesController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy(Invoice $invoice) {
+   
         //
+        Invoice::find($invoice->id)->invoiceDetails()->delete();
+        Invoice::find($invoice->id)->delete();
+        return redirect()->route('invoices.index');
     }
+    
+    public function indexInvoicesAjax(Request $request) {
+        //returns list of products
+        //if ($request->ajax()) {//return json data only to ajax queries 
+        $filter = $request->search['value'];
+
+        $columns = array('invoicenumber_mobile', 'customername', 'invoicedate','invoicetotal'); //array to sort by, from incoming ajax request
+        //$orderedColumn calculates column name that needs to be sorted by Laravel before sending back to Datatables
+        $orderedColumn = $request->order[0]['column'] == 0? 'customername' : $columns[$request->order[0]['column'] - 1];
+
+        $product = Invoice::where($orderedColumn, 'LIKE', "%" . $filter . "%")
+                ->orderBy($orderedColumn, $request->order[0]['dir']) //order[0]['column'] contains the column to be ordered as selected on the US and sent to Laravel by DataTables vi ajax
+                ->get();
+
+        $response['draw'] = $request->get('draw');
+
+        $response['recordsTotal'] = Product::all()->count();
+
+        $response['recordsFiltered'] = $product->count();
+
+        $response['data'] = array_slice($product->toArray(), $request->get('start'), $request->get('length'));
+
+        return response()->json($response);
+        //}
+    }
+    
 
     public function receiveInvoicesJson(Request $request) {
 

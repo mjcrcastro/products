@@ -57,7 +57,7 @@
                         </a>
                     </div>
                     <div id="showCities" class="col-md">
-                        <a class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver Producto 
+                        <a class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
                             <svg aling ="class="bi" width="24" height="24" fill="currentColor">
                             <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
                             </svg>

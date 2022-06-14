@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\InvoicesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,3 +26,6 @@ Route::get('products_ajax',[App\Http\Controllers\ProductsController::class, 'pro
 Route::get('allproductsjson', [App\Http\Controllers\ProductsController::class, 'allProductsJson']);
 
 Route::get('getcsv', [App\Http\Controllers\ProductsController::class,'exportToCsv']);
+
+//Products routes
+Route::resource('invoices', InvoicesController::class);

@@ -122,7 +122,7 @@ class ProductsController extends Controller {
      */
     public function destroy(Product $product) {
         //
-        Product::find($id)->delete();
+        Product::find($product->id)->delete();
         return redirect()->route('products.index');
     }
 

@@ -20,4 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('invoice', [App\Http\Controllers\InvoicesController::class, 'receiveInvoicesJson']);
 
+Route::get('invoices_index', [App\Http\Controllers\InvoicesController::class, 'indexInvoicesAjax']);
+
 Route::post('safetodelete', [App\Http\Controllers\InvoicesController::class, 'safeToDeleteInvoice']);
