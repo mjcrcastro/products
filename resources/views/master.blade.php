@@ -8,7 +8,7 @@
         <meta name="author" content="" />
         <title>Facturación</title>
         <link href="/css/styles.css" rel="stylesheet" />
-        <link href="/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
         @yield('css')
 
