@@ -10,74 +10,79 @@
                         <table> 							
                             <tr> 								
                                 <td class="title">
-                                </td>  								
-                                <td> 
-                                    FACTURA : {{ $invoice->invoicenumber_mobile  }}<br /> 	
-                                    FECHA : {{ $invoice->invoicedate  }} <br /> 									
-                                    <br /> 	
-                                </td> 							
-                            </tr> 						
-                        </table> 					
-                    </td> 				
-                </tr>  				
-                <tr class="information"> 					
-                    <td colspan="4"> 						
-                        <table> 							
-                            <tr> 								
-                                <td> 									
-                                    LIBRERIA Y FOTOCOPIAS YARETZI
-                                    <br /> 
-                                    Frente al Instituto San Carlos Borromeo
-                                    <br /> 									
-                                    San Carlos, Rio San Juan
-                                    <br /> 									
-                                    Whatsapp: +505 83339785 								
-                                </td>  								
-                                <td> 									
-                                    Cliente: {{ $invoice->customername  }}
-                                    <br /> 									
-                                    <br /> 									
-                                    <br /> 								
-                                </td> 							
-                            </tr> 						
-                        </table> 					
-                    </td> 				
-                </tr>  				
-                <tr class="heading"> 					
-                    <td>Artículo</td>  					
-                    <td align="right">Cantidad</td> 					 					
-                    <td align="right">Precio</td>  					
-                    <td align="right">Total</td> 				
-                </tr>  
-                @if($invoice->invoiceDetails->count())
-                @foreach($invoice->invoiceDetails as $invoiceDetail)
-                <tr class="item"> 
-                    <td align='left'>  {{ $invoiceDetail->product->description }}</td> 
-                    <td align='right'> {{ $invoiceDetail->amount }}</td> 
-                    <td align='right'> {{ number_format ($invoiceDetail->price,2) }}</td> 
-                    <td align='right'> {{ number_format($invoiceDetail->amount*$invoiceDetail->price,2) }}</td> 
-                </tr> 
-                @endforeach
-                @endif
-                <tr class="total"> 					
-                    <td>
+                                </td>
+                            <ol id="breadCrumbs" class="breadcrumb mb-4">
+                                <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="./">Listado de Facturas</a></li>
+                                <li class="breadcrumb-item active">Factura {{ $invoice->invoicenumber_mobile  }}</li> 
+                            </ol>
+                            <td> 
+                                FACTURA : {{ $invoice->invoicenumber_mobile  }}<br /> 	
+                                FECHA : {{ $invoice->invoicedate  }} <br /> 									
+                                <br /> 	
+                            </td> 							
+                </tr> 						
+            </table> 					
+        </td> 				
+    </tr>  				
+    <tr class="information"> 					
+        <td colspan="4"> 						
+            <table> 							
+                <tr> 								
+                    <td> 									
+                        LIBRERIA Y FOTOCOPIAS YARETZI
+                        <br /> 
+                        Frente al Instituto San Carlos Borromeo
+                        <br /> 									
+                        San Carlos, Rio San Juan
+                        <br /> 									
+                        Whatsapp: +505 83339785 								
+                    </td>  								
+                    <td> 									
+                        Cliente: {{ $invoice->customername  }}
+                        <br /> 									
+                        <br /> 									
+                        <br /> 								
+                    </td> 							
+                </tr> 						
+            </table> 					
+        </td> 				
+    </tr>  				
+    <tr class="heading"> 					
+        <td>Artículo</td>  					
+        <td align="right">Cantidad</td> 					 					
+        <td align="right">Precio</td>  					
+        <td align="right">Total</td> 				
+    </tr>  
+    @if($invoice->invoiceDetails->count())
+    @foreach($invoice->invoiceDetails as $invoiceDetail)
+    <tr class="item"> 
+        <td align='left'>  {{ $invoiceDetail->product->description }}</td> 
+        <td align='right'> {{ $invoiceDetail->amount }}</td> 
+        <td align='right'> {{ number_format ($invoiceDetail->price,2) }}</td> 
+        <td align='right'> {{ number_format($invoiceDetail->amount*$invoiceDetail->price,2) }}</td> 
+    </tr> 
+    @endforeach
+    @endif
+    <tr class="total"> 					
+        <td>
 
-                    </td> 					
-                    <td>
+        </td> 					
+        <td>
 
-                    </td> 					
-                    <td>
+        </td> 					
+        <td>
 
-                    </td>  					
-                    <td align="right">
-                        Total General: C$ {{ number_format($invoice->invoicetotal,2) }} 
-                    </td> 				
-                </tr> 			
-            </table> 
-            <button id="printPageButton" class='btn btn-block text-nowrap btn-primary' onClick="window.print();">Imprimir</button>
-            {{ link_to_route('invoices.index','Volver',null,array('id'=>'invoicesIndex','class'=>'btn btn-block text-nowrap btn-secondary')) }}
-        </div> 	
-    </body> 
+        </td>  					
+        <td align="right">
+            Total General: C$ {{ number_format($invoice->invoicetotal,2) }} 
+        </td> 				
+    </tr> 			
+</table> 
+<button id="printPageButton" class='btn btn-block text-nowrap btn-primary' onClick="window.print();">Imprimir</button>
+{{ link_to_route('invoices.index','Volver',null,array('id'=>'invoicesIndex','class'=>'btn btn-block text-nowrap btn-secondary')) }}
+</div> 	
+</body> 
 
 </html>
 <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -157,7 +162,10 @@
         #invoicesIndex {
             display: none;
         }
-        body  { margin: 1.6cm; }
+        #breadCrumbs {
+            display: none;
+        }
+        body  { margin: 25mm 0mm 0mm 0mm; }
     }
     @page {
         size: auto;   /* auto is the initial value */
