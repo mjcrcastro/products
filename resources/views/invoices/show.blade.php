@@ -80,7 +80,7 @@
     </body> 
 
 </html>
-<link href="/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <style>
     .invoice-box { 				
         max-width: 800px; 				
