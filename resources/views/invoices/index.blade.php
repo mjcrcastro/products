@@ -175,21 +175,7 @@ $(document).ready(function () {
             });
 });
 
-$.ajax({
-    type: "POST",
-    url: "{{ route('invoices.store') }}",
-    data: descriptor,
-    dataType: 'json',
-    success: function (data) {
-        addDescriptorToList(
-                data.id,
-                parseInt(data.descriptorType_id),
-                category,
-                data.description
-                );
-        $("#addAsDescriptor").text("...");
-    }
-});
+ 
 
 </script>
 
