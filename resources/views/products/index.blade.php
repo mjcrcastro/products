@@ -126,7 +126,7 @@ $(document).ready(function () {
             {"data": "price"},
             {"data": null,
                 "render": function (data, type, row) {
-                    return "EXTRA COLUMN";
+                    return data['price'];
                 }}
         ]
     });
