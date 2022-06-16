@@ -128,7 +128,6 @@ var table = $('#productsTable').DataTable({
                 "render": { function (data, type, row) {
                 return data['price'];}
                 }
-        ]
         });
         table //here we change 
                 .on('select', function (e, dt, type, indexes) {
