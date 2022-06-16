@@ -127,7 +127,7 @@ var table = $('#productsTable').DataTable({
         {"data": "description"},
         {"data": "price"},
         {"data": null, "render": function(data, type, row){
-                return ('<img src="https://chart.googleapis.com/chart?chs=20x20&cht=qr&&chld=H&chl=' + data['barcode'] + '" alt="QR code" class="img-fluid">');
+                return ('<img src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&&chld=H&chl=' + data['barcode'] + '" alt="QR code" class="img-fluid">');
         }
         }
     ]
