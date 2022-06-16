@@ -126,7 +126,10 @@ var table = $('#productsTable').DataTable({
         {"data": "barcode"},
         {"data": "description"},
         {"data": "price"},
-        {"data": "price"}
+        {"data": null, "render": function(data, type, row){
+                return ('<img src="https://chart.googleapis.com/chart?chs=20x20&cht=qr&&chld=H&chl=' + data['barcode'] + '" alt="QR code" class="img-fluid">');
+        }
+        }
     ]
 });
 table //here we change 
