@@ -56,22 +56,22 @@
                         </svg>
                     </a>
                 </div>
-                <div id="showCities" class="col-md">
-                    <a class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
+                <div  class="col-md">
+                    <a id="showProduct" class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
                         <svg aling ="class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
                         </svg>
                     </a>
                 </div>
-                <div id="editProduct" class="col-md">
-                    <a class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Editar
+                <div  class="col-md btn-disabled">
+                    <a id="editProduct" class="btn btn-block text-nowrap" href="#" role="button">Editar
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
                         </svg>
                     </a>
                 </div>
-                <div id ="deleteProduct" class="col-md">
-                    <a class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Borrar
+                <div id ="deleteProduct" class="col-md btn-disabled">
+                    <a class="btn btn-block text-nowrap" href="#" role="button">Borrar
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
                         </svg>
@@ -94,55 +94,72 @@
 <!-- Page level custom scripts -->
 <script type='text/javascript'>
 /*
-* Displays list of products using
-* a datatables jQuery plugin on table id="example"
-*/
+ * Displays list of products using
+ * a datatables jQuery plugin on table id="example"
+ */
 $(document).ready(function () {
-var editButton = $('#editProduct');
-var deleButton = $('#deleteProduct');
-var table = $('#productsTable').DataTable({
-    "processing": true,
-    "serverSide": true,
-    "select": {
-        style: 'single'
-    },
-    "ajax": {
-        "url": "{{ url('/products_ajax') }}",
-        "type": "GET",
-        'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    },
-    "columnDefs": [
-        {
-            "targets": [0],
-            "visible": false,
-            "searchable": false
-        }
-    ],
-    "columns": [//tells where (from data) the columns are to be placed
-        {"data": "id"},
-        {"data": "barcode"},
-        {"data": "description"},
-        {"data": "price"}
-    ]
-});
-table //here we change 
-        .on('select', function (e, dt, type, indexes) {
-            var rowData = table.rows(indexes).data().toArray();
-            editButton.html('<a class="btn btn-block text-nowrap btn-primary" href="/products/' + rowData[0]['id'] + '/edit" role="button">Editar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/></svg></a>');
-            deleButton.html('<form method="POST" action="/products/' + rowData[0]['id'] + '" accept-charset="UTF-8">' +
-                    '<input name="_method" type="hidden" value="DELETE">' +
-                    '<input name="_token" type="hidden" value="' + $('meta[name="csrf-token"]').attr('content') + '">' +
-                    '<button class="btn btn-block text-nowrap btn-primary " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
-                    '</form>');
-        })
-        .on('deselect', function (e, dt, type, indexes) {
-            editButton.html('<a class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Editar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/></svg></a>');
-            deleButton.html('<a class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></a>');
-        })
-        .on('search.dt', function () {
-            table.rows('.selected').deselect();
-        });
+    var editButton = $('#editProduct');
+    var showButton = $('#showProduct');
+    var deleDiv = $('#deleteProduct');
+    var table = $('#productsTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "select": {
+            style: 'single'
+        },
+        "ajax": {
+            "url": "{{ url('/products_ajax') }}",
+            "type": "GET",
+            'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        },
+        "columnDefs": [
+            {
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }
+        ],
+        "columns": [//tells where (from data) the columns are to be placed
+            {"data": "id"},
+            {"data": "barcode"},
+            {"data": "description"},
+            {"data": "price"}
+        ]
+    });
+    table //here we change 
+            .on('select', function (e, dt, type, indexes) {
+                var rowData = table.rows(indexes).data().toArray();
+                //manage edit button    
+                editButton.attr('href', '/products/' + rowData[0]['id'] + '/edit');
+                editButton.addClass('btn-primary');
+                editButton.removeClass('btn-disabled');
+                //manage show button
+                showButton.attr('href', '/products/' + rowData[0]['id']);
+                showButton.addClass('btn-primary');
+                showButton.removeClass('btn-disabled');
+
+                deleDiv.html('<form method="POST" action="/products/' + rowData[0]['id'] + '" accept-charset="UTF-8">' +
+                        '<input name="_method" type="hidden" value="DELETE">' +
+                        '<input name="_token" type="hidden" value="' + $('meta[name="csrf-token"]').attr('content') + '">' +
+                        '<button class="btn btn-block text-nowrap btn-primary " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
+                        '</form>');
+            })
+            .on('deselect', function (e, dt, type, indexes) {
+                //manage edit button
+                editButton.attr('href', '#'); //remove href
+                editButton.removeClass('btn-primary'); //remove primary class
+                editButton.addClass('btn-disabled');  //add disabled class
+                //manage show button
+                showButton.attr('href', '#'); //remove href
+                showButton.removeClass('btn-primary'); //remove primary class
+                showButton.addClass('btn-disabled');  //add disabled class
+
+                deleDiv.html('<a class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></a>');
+            })
+            .on('search.dt', function () {
+                table.rows('.selected').deselect();
+            });
 });
 </script>
 
