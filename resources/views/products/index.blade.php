@@ -30,7 +30,6 @@
                         <th>Código</th>
                         <th>Descripción</th>
                         <th>Precio</th>
-                        <th>Precio</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -38,7 +37,6 @@
                         <th></th>
                         <th>Código</th>
                         <th>Descripción</th>
-                        <th>Precio</th>
                         <th>Precio</th>
                     </tr>
                 </tfoot>
@@ -125,11 +123,7 @@ var table = $('#productsTable').DataTable({
         {"data": "id"},
         {"data": "barcode"},
         {"data": "description"},
-        {"data": "price"},
-        {"data": null, "render": function(data, type, row){
-                return ('<img src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&&chld=H&chl=' + data['barcode'] + '" alt="QR code" class="img-fluid">');
-        }
-        }
+        {"data": "price"}
     ]
 });
 table //here we change 
