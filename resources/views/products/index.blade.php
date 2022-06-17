@@ -113,7 +113,8 @@ $(document).ready(function () {
                 "searchable": false
             },{
                 "targets":[3],
-                "render": $.fn.dataTable.render.number(',', '.', 2, '')
+                "className": 'text-right',
+                "render": $.fn.dataTable.render.number(',', '.', 2, '')//formats the number
             }
         ],
         "columns": [//tells where (from data) the columns are to be placed
