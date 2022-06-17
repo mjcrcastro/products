@@ -13,16 +13,13 @@
 
 <div class="container-fluid px-4">
     <h1 class="mt-4">Facturas</h1> 
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
-        <li class="breadcrumb-item active">Facturas</li> 
-    </ol>
+
 
     <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Listado de Facturas
-        </div>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.html">Inventario</a></li>
+            <li class="breadcrumb-item active">Listado de Facturas</li> 
+        </ol>
         <div class="card-body">
             <table class="table display" id="invoicesTable" width="100%" cellspacing="0">
                 <thead>
@@ -175,7 +172,7 @@ $(document).ready(function () {
             });
 });
 
- 
+
 
 </script>
 
