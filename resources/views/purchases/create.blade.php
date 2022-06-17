@@ -185,7 +185,7 @@ $(document).ready(function () {
             $('#amountId').val(),
             $('#costId').val()]
                 ).draw(false);
-
+        //clean up values
         $('#productSelect').text(null);
         $('#productSelect').val(null);
         $('#amountId').val('');
