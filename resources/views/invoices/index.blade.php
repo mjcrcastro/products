@@ -109,7 +109,7 @@ $(document).ready(function () {
             style: 'single'
         },
         "ajax": {
-            "url": "{{ url('/api/invoices_index') }}",
+            "url": "{{ url('/invoices_index') }}",
             "type": "GET",
             'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }

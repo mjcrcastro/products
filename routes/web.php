@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\PurchasesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,18 +20,23 @@ use App\Http\Controllers\InvoicesController;
 Route::get('/', function () {
     return view('welcome');
 });
-//Products routes
+//***************Products routes
 Route::resource('products', ProductsController::class);
-//Route for responding vis Ajax
+//Route for responding via Ajax to datatables
 Route::get('products_ajax',[App\Http\Controllers\ProductsController::class, 'productsAjax']);
-
+//route respond to Invoice Mobile App
 Route::get('allproductsjson', [App\Http\Controllers\ProductsController::class, 'allProductsJson']);
+//route to feed a select2 select control
+Route::get('select2ajax',[App\Http\Controllers\ProductsController::class, 'productsSelect2Json']);
 
-Route::get('getcsv', [App\Http\Controllers\ProductsController::class,'exportToCsv']);
-
-//Products routes
+//**************Invoices routes
 Route::resource('invoices', InvoicesController::class);
+//Route to provide list of invoices to DataTables
+Route::get('invoices_index', [App\Http\Controllers\InvoicesController::class, 'indexInvoicesAjax']);
 
-//Products routes
+//**************Providers routes
 Route::resource('providers', ProvidersController::class);
 Route::get('providers_ajax',[App\Http\Controllers\ProvidersController::class, 'providersAjax']);
+
+//**************Purchases routes
+Route::resource('purchases', PurchasesController::class);

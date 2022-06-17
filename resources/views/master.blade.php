@@ -8,7 +8,7 @@
         <meta name="author" content="" />
         <title>Facturación</title>
         <link href="/css/styles.css" rel="stylesheet" />
-        <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"  />
 
         @yield('css')
 
@@ -65,6 +65,12 @@
                                 <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
                                 </svg>
                                 <span>&nbspFacturas</span>
+                            </a>
+                            <a class="nav-link" href="/purchases">
+                                <svg class="bi" width="16" height="16" fill="currentColor">
+                                <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
+                                </svg>
+                                <span>&nbspCompras</span>
                             </a>
                             <a class="nav-link" href="/products">
                                 <svg class="bi" width="16" height="16" fill="currentColor">

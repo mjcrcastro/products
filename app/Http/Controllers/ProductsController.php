@@ -43,7 +43,7 @@ class ProductsController extends Controller {
         $validator = Validator::make($request->all(), [
                     'barcode' => ['required', Rule::unique('products')],
                     'description' => ['required', Rule::unique('products')],
-                    'price' => ['required','numeric']
+                    'price' => ['required', 'numeric']
                         ]
         );
 
@@ -68,7 +68,7 @@ class ProductsController extends Controller {
      */
     public function show(Product $product) {
         //
-         return view('products.show', compact('product'));
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -101,7 +101,7 @@ class ProductsController extends Controller {
         $validator = Validator::make($request->all(), [
                     'barcode' => ['required', Rule::unique('products')->ignore($product->id)],
                     'description' => ['required', Rule::unique('products')->ignore($product->id)],
-                     'price' => ['required','numeric']
+                    'price' => ['required', 'numeric']
                         ]
         );
 
@@ -134,7 +134,7 @@ class ProductsController extends Controller {
 
         $columns = array('barcode', 'description', 'price'); //array to sort by, from incoming ajax request
         //$orderedColumn calculates column name that needs to be sorted by Laravel before sending back to Datatables
-        $orderedColumn = $request->order[0]['column'] == 0? 'description' : $columns[$request->order[0]['column'] - 1];
+        $orderedColumn = $request->order[0]['column'] == 0 ? 'description' : $columns[$request->order[0]['column'] - 1];
 
         $product = Product::where($orderedColumn, 'LIKE', "%" . $filter . "%")
                 ->orderBy($orderedColumn, $request->order[0]['dir']) //order[0]['column'] contains the column to be ordered as selected on the US and sent to Laravel by DataTables vi ajax
@@ -156,27 +156,20 @@ class ProductsController extends Controller {
         $products = Product::all();
         return response()->json($products);
     }
-    
-    
-        
-    public function exportToCsv() {
-        
 
-            $result = DB::table('products')->get();
-            
-            $handle = fopen("products.csv", 'w+');
-
-            foreach ($result as $row) {
-                
-                fputcsv($handle, (array)$row);  //fputcsv requires array
-                // as second parameter
-            }
-            fclose($handle);
-            $headers = array(
-            'Content-Type' => 'Content-type: text/plain',
-        );
-            return Response::download('products.csv', 'products.csv', $headers );
-        }
+    public function productsSelect2Json(Request $request) {
         
-    
+        $term = ($request['term']?$request['term']:'');
+        
+        $products = Product::select(
+                                'id',
+                                DB::raw("CONCAT(barcode,' | ',description) AS text")
+                        )->where('description', 'like', '%' . $term . '%')
+                        ->orWhere('barcode', 'like', '%' . $term . '%')->limit(10)->get(['id', 'text']);
+
+        $results = array('results' => $products);
+
+        return response()->json($results);
+    }
+
 }
