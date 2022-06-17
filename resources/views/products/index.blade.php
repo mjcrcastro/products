@@ -111,6 +111,9 @@ $(document).ready(function () {
                 "targets": [0],
                 "visible": false,
                 "searchable": false
+            },{
+                "targets":[3],
+                "render": $.fn.dataTable.render.number(',', '.', 2, '')
             }
         ],
         "columns": [//tells where (from data) the columns are to be placed
