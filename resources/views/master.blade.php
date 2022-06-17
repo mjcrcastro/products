@@ -51,9 +51,12 @@
                             </a>
                             <div class="sb-sidenav-menu-heading">Reportes</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Ventas
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                <a class="nav-link" href="/products">
+                                <svg class="bi" width="16" height="16" fill="currentColor">
+                                <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
+                                </svg>
+                                <span>&nbspVentas</span>
+                            </a>
                             </a>
                              
                             <div class="sb-sidenav-menu-heading">Tablas</div>
@@ -68,6 +71,12 @@
                                 <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
                                 </svg>
                                 <span>&nbspProductos</span>
+                            </a>
+                             <a class="nav-link" href="/providers">
+                                <svg class="bi" width="16" height="16" fill="currentColor">
+                                <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
+                                </svg>
+                                <span>&nbspProveedores</span>
                             </a>
                         </div>
                     </div>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProvidersController;
 use App\Http\Controllers\InvoicesController;
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,7 @@ Route::get('getcsv', [App\Http\Controllers\ProductsController::class,'exportToCs
 
 //Products routes
 Route::resource('invoices', InvoicesController::class);
+
+//Products routes
+Route::resource('providers', ProvidersController::class);
+Route::get('providers_ajax',[App\Http\Controllers\ProvidersController::class, 'providersAjax']);

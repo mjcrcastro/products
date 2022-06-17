@@ -136,7 +136,7 @@ class ProductsController extends Controller {
         //$orderedColumn calculates column name that needs to be sorted by Laravel before sending back to Datatables
         $orderedColumn = $request->order[0]['column'] == 0? 'description' : $columns[$request->order[0]['column'] - 1];
 
-        $product = Product::where('description', 'LIKE', "%" . $filter . "%")
+        $product = Product::where($orderedColumn, 'LIKE', "%" . $filter . "%")
                 ->orderBy($orderedColumn, $request->order[0]['dir']) //order[0]['column'] contains the column to be ordered as selected on the US and sent to Laravel by DataTables vi ajax
                 ->get();
 
