@@ -12,7 +12,7 @@
 
 <div class="container-fluid px-4">
     <div class="card mb-4">
-        <ol class="breadcrumb mb-4">
+        <ol class="breadcrumb mb-1">
             <li class="breadcrumb-item active">Listado de Productos</li> 
         </ol>
         <div class="card-body">
