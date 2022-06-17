@@ -2,9 +2,11 @@
 
 @section('css')
 <!-- Custom styles for this page -->
+<link href="/vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" type="text/css" href="/vendor/datatables/css/dataTables.bootstrap4.min.css"/>
 <link href="/vendor/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
-<link href="/vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+
+<link href="/vendor/datatables/css/select.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
 @stop
 
 @section('main')
@@ -21,9 +23,10 @@
             <li class="breadcrumb-item active">Nueva Compra</li> 
         </ol>
         <div class="card-body">
-            <table class="table display" id="providersTable" width="100%" cellspacing="0">
+            <table class="table display" id="purchasesTable" width="100%" cellspacing="0">
                 <thead>
                     <tr >
+                        <th></th>
                         <th></th>
                         <th>Producto</th>
                         <th>Cantidad</th>
@@ -32,6 +35,7 @@
                 </thead>
                 <tfoot>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th>Producto</th>
                         <th>Cantidad</th>
@@ -53,25 +57,25 @@
                             <label class="input-group-text" for="inputGroupSelect01">Producto</label>
                         </div>
                         <select class="custom-select form-control" id="productSelect">
-  
+
                         </select>
                     </div>
                 </div>
 
                 <div  class="col-md">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+                        <input id="amountId" type="text" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <div id ="deleteProvider" class="col-md">
+                <div id ="cost" class="col-md">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Costo" aria-label="Costo" aria-describedby="basic-addon1">
+                        <input id="costId" type="text" class="form-control" placeholder="Costo" aria-label="Costo" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md">
-                    <a class="btn btn-block text-nowrap btn-primary" href="#" role="button">Agregar Producto  
+                    <a id="addProduct" class="btn btn-block text-nowrap btn-primary" href="#" role="button">Agregar Producto  
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
                         </svg>
@@ -113,8 +117,6 @@ $(document).ready(function () {
     var deleDiv = $('#deleteProvider');
     var counter = 0;
     var table = $('#purchasesTable').DataTable({
-        "processing": true,
-        "serverSide": true,
         "select": {
             style: 'single'
         },
@@ -129,14 +131,6 @@ $(document).ready(function () {
                 "visible": false,
                 "searchable": false
             }
-        ],
-        "columns": [//tells where (from data) the columns are to be placed
-            {"data": "id"},
-            {"data": "product_id"},
-            {"data": "barcode"},
-            {"data": "description"},
-            {"data": "amount"},
-            {"data": "cost"}
         ]
     });
     table //here we change 
@@ -177,9 +171,30 @@ $(document).ready(function () {
         theme: "bootstrap4",
         ajax: {
             url: '{{ url("/select2ajax")  }}',
-                    dataType: 'json'
+            dataType: 'json'
                     // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
+    });
+
+    $('#addProduct').on('click', function () {
+
+        table.row.add([
+            counter,
+            $('#productSelect').val(),
+            $('#productSelect option:selected').text(),
+            $('#amountId').val(),
+            $('#costId').val()]
+                ).draw(false);
+
+        $('#productSelect').text(null);
+        $('#productSelect').val(null);
+        $('#amountId').val('');
+        $('#costId').val('');
+
+        counter++;
+
+
+
     });
 });
 </script>
