@@ -11,7 +11,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="container-fluid px-4">
-    <div class="card mb-4">
+    <div class="card mb-0">
         <ol class="breadcrumb mb-1">
             <li class="breadcrumb-item active">Listado de Productos</li> 
         </ol>
