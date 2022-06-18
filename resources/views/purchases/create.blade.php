@@ -177,7 +177,7 @@ $(document).ready(function () {
     });
 
     $('#addProduct').on('click', function () {
-
+       if valid($('#productSelect').val(), $('#amountId').val(), $('#costId').val()) {
         table.row.add([
             counter,
             $('#productSelect').val(),
@@ -192,16 +192,25 @@ $(document).ready(function () {
         $('#costId').val('');
 
         counter++;
-
-
-
+       }else{
+        alert('Registro no válido')
+       }
+        
     });
 
     function valid (oProduct, oAmount, oCost) {
          if (oProduct === '' || oProduct === null) {
             $('#productSelect').addClass('is-invalid');
             return false;
-         }   
+         }  
+         if (oAmount === '' || oAmount === null) {
+            $('#amountId').addClass('is-invalid');
+            return false;
+         } 
+         if (oCost === '' || oCost === null) {
+            $('#costId').addClass('is-invalid');
+            return false;
+         }  
     }
 });
 </script>
