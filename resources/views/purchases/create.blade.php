@@ -191,6 +191,8 @@ $(document).ready(function () {
         $('#productSelect').val(null);
         $('#amountId').val(null);
         $('#costId').val(null);
+        
+        $('#productSelect').focus();
 
         counter++;
 
