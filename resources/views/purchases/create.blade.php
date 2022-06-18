@@ -109,7 +109,7 @@
 <script type='text/javascript'>
 /*
  * Displays list of products using
- * a datatables jQuery plugin on table id="example"
+ * a datatables jQuery plugin on table id="purchasesTable"
  */
 $(document).ready(function () {
     var editButton = $('#editProvider');
@@ -187,7 +187,7 @@ $(document).ready(function () {
             $('#amountId').val(),
             $('#costId').val()]
             ).draw(false);
-            
+
         //clean up values
         $('#productSelect').text(null);
         $('#productSelect').val(null);
