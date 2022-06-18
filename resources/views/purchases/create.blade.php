@@ -196,6 +196,13 @@ $(document).ready(function () {
 
 
     });
+
+    function valid (oProduct, oAmount, oCost) {
+         if (oProduct === '' || oProduct === null) {
+            $('#productSelect').addClass('is-invalid');
+            return false;
+         }   
+    }
 });
 </script>
 
