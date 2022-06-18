@@ -85,7 +85,7 @@
                 <div  class="col-md btn-disabled">
                     <a id="editProvider" class="btn btn-block text-nowrap  btn-primary" href="#" role="button">Guardar Compra
                     <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#save"/>
+                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#floppy"/>
                         </svg>
                     </a>
                 </div>
