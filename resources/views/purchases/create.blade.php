@@ -204,18 +204,21 @@ $(document).ready(function () {
     });
 
     function isValid (oProduct, oAmount, oCost) {
-         if (oProduct === '' || oProduct === null) {
+        validity = true; 
+        if (oProduct === '' || oProduct === null) {
             $('#productSelect').addClass('is-invalid');
-            return false;
+            validity = false;
          }  
          if (oAmount === '' || oAmount === null) {
             $('#amountId').addClass('is-invalid');
-            return false;
+            validity = false;
          } 
          if (oCost === '' || oCost === null) {
             $('#costId').addClass('is-invalid');
-            return false;
+            validity = false;
          }  
+
+         return validity;
     }
 });
 </script>
