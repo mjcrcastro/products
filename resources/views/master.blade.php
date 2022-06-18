@@ -16,7 +16,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="index.html">Sistema de Inventario y Facturación</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -44,34 +44,32 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
                             <div class="sb-sidenav-menu-heading">Reportes</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <a class="nav-link" href="/products">
+                            <a class="nav-link" href="/products">
                                 <svg class="bi" width="16" height="16" fill="currentColor">
                                 <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
                                 </svg>
                                 <span>&nbspVentas</span>
                             </a>
-                            </a>
-                             
-                            <div class="sb-sidenav-menu-heading">Tablas</div>
-                             <a class="nav-link" href="/invoices">
+                            <div class="sb-sidenav-menu-heading">Registro de Transacciones</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            
+                            <a class="nav-link" href="/invoices">
                                 <svg class="bi" width="16" height="16" fill="currentColor">
                                 <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
                                 </svg>
                                 <span>&nbspFacturas</span>
-                            </a>
-                            <a class="nav-link" href="/purchases">
+                             </a>
+                             <a class="nav-link" href="/purchases">
                                 <svg class="bi" width="16" height="16" fill="currentColor">
                                 <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
                                 </svg>
                                 <span>&nbspCompras</span>
-                            </a>
+                             </a>
+                            
+                            
+                            <div class="sb-sidenav-menu-heading">Tablas</div>
+                             
                             <a class="nav-link" href="/products">
                                 <svg class="bi" width="16" height="16" fill="currentColor">
                                 <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
