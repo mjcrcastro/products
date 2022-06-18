@@ -209,11 +209,11 @@ $(document).ready(function () {
             $('#productSelect').addClass('is-invalid');
             validity = false;
          }  
-         if (oAmount === '' || oAmount === null || !isNumeric(oAmount)) {
+         if (oAmount === '' || oAmount === null || !(!isNaN(parseFloat(oAmount)) && isFinite(oAmount)) ) {
             $('#amountId').addClass('is-invalid');
             validity = false;
          } 
-         if (oCost === '' || oCost === null || !isNumeric(oCost) ) {
+         if (oCost === '' || oCost === null || !(!isNaN(parseFloat(oCost)) && isFinite(oCost)) ) {
             $('#costId').addClass('is-invalid');
             validity = false;
          }  
