@@ -52,8 +52,7 @@
                                 <span>&nbspVentas</span>
                             </a>
                             <div class="sb-sidenav-menu-heading">Registro de Transacciones</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                            
+                                                        
                             <a class="nav-link" href="/invoices">
                                 <svg class="bi" width="16" height="16" fill="currentColor">
                                 <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
