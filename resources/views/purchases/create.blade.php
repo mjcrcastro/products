@@ -193,7 +193,7 @@ $(document).ready(function () {
 
         counter++;
        }else{
-        alert('Registro no válido')
+        alert('Registro no válido');
        }
         
     });
