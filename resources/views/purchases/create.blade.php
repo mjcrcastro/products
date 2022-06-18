@@ -208,16 +208,16 @@ $(document).ready(function () {
         $('#costId').removeClass('is-invalid');
         $('#amountId').removeClass('is-invalid');
         $('#productSelect').removeClass('is-invalid');
-        if (oProduct === '' || oProduct === null) {
+        if (!$.isNumeric(oProduct)) {
             $('#productSelect').addClass('is-invalid');
             validity = false;
          }  
-         if (oAmount === '' || oAmount === null || !$.isNumeric(oAmount) || oAmount <= 0) {
+         if (!$.isNumeric(oAmount) || oAmount <= 0) {
             $('#amountId').addClass('is-invalid');
             validity = false;
          } 
 
-         if (oCost === '' || oCost === null || !$.isNumeric(oCost) || oCost <= 0 ) {
+         if (!$.isNumeric(oCost) || oCost <= 0 ) {
             $('#costId').addClass('is-invalid');
             validity = false;
          }  
