@@ -213,10 +213,21 @@ $(document).ready(function () {
             $('#amountId').addClass('is-invalid');
             validity = false;
          } 
+
+        if(oAmount <=0) {
+            $('#amountId').addClass('is-invalid');
+            validity = false;
+        }
+
          if (oCost === '' || oCost === null || !(!isNaN(parseFloat(oCost)) && isFinite(oCost)) ) {
             $('#costId').addClass('is-invalid');
             validity = false;
          }  
+
+         if (oCost <= 0){
+            $('#costId').addClass('is-invalid');
+            validity = false;
+         }
 
          return validity;
     }
