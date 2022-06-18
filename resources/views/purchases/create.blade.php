@@ -185,12 +185,12 @@ $(document).ready(function () {
             $('#productSelect option:selected').text(),
             $('#amountId').val(),
             $('#costId').val()]
-                ).draw(false);
+            ).draw(false);
         //clean up values
         $('#productSelect').text(null);
         $('#productSelect').val(null);
-        $('#amountId').val('');
-        $('#costId').val('');
+        $('#amountId').val(null);
+        $('#costId').val(null);
 
         counter++;
        }else{
