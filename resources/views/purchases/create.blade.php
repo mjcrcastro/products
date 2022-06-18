@@ -177,7 +177,8 @@ $(document).ready(function () {
     });
 
     $('#addProduct').on('click', function () {
-       if valid($('#productSelect').val(), $('#amountId').val(), $('#costId').val()) {
+
+       if isValid($('#productSelect').val(), $('#amountId').val(), $('#costId').val()) {
         table.row.add([
             counter,
             $('#productSelect').val(),
@@ -198,7 +199,7 @@ $(document).ready(function () {
         
     });
 
-    function valid (oProduct, oAmount, oCost) {
+    function isValid (oProduct, oAmount, oCost) {
          if (oProduct === '' || oProduct === null) {
             $('#productSelect').addClass('is-invalid');
             return false;
