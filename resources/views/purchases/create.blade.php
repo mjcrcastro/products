@@ -194,9 +194,6 @@ $(document).ready(function () {
 
         counter++;
 
-        $('#costId').removeClass('is-invalid');
-        $('#amountId').removeClass('is-invalid');
-        $('#productSelect').removeClass('is-invalid');
        }else{
         alert('Registro no válido');
        }
@@ -205,6 +202,9 @@ $(document).ready(function () {
 
     function isValid (oProduct, oAmount, oCost) {
         validity = true; 
+        $('#costId').removeClass('is-invalid');
+        $('#amountId').removeClass('is-invalid');
+        $('#productSelect').removeClass('is-invalid');
         if (oProduct === '' || oProduct === null) {
             $('#productSelect').addClass('is-invalid');
             validity = false;
