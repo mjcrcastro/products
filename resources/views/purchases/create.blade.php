@@ -178,7 +178,7 @@ $(document).ready(function () {
 
     $('#addProduct').on('click', function () {
 
-       if isValid($('#productSelect').val(), $('#amountId').val(), $('#costId').val()) {
+       if (isValid($('#productSelect').val(), $('#amountId').val(), $('#costId').val())) {
         table.row.add([
             counter,
             $('#productSelect').val(),
