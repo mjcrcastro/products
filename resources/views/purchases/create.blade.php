@@ -169,7 +169,7 @@ $(document).ready(function () {
 
     $("#productSelect").select2({
         theme: "bootstrap4",
-        selectOnClose: true;
+        selectOnClose: true,
         ajax: {
             url: '{{ url("/select2ajax")  }}',
             dataType: 'json'
