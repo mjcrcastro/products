@@ -187,6 +187,7 @@ $(document).ready(function () {
             $('#amountId').val(),
             $('#costId').val()]
             ).draw(false);
+            
         //clean up values
         $('#productSelect').text(null);
         $('#productSelect').val(null);
@@ -197,7 +198,7 @@ $(document).ready(function () {
 
         counter++;
 
-       }else{
+        }else{
         alert('Registro no válido');
        }
         
