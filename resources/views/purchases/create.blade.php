@@ -212,25 +212,15 @@ $(document).ready(function () {
             $('#productSelect').addClass('is-invalid');
             validity = false;
          }  
-         if (oAmount === '' || oAmount === null || !(!isNaN(parseFloat(oAmount)) && isFinite(oAmount)) ) {
+         if (oAmount === '' || oAmount === null || !$.isNumeric(oAmount) || oAmount <= 0) {
             $('#amountId').addClass('is-invalid');
             validity = false;
          } 
 
-        if(oAmount <=0) {
-            $('#amountId').addClass('is-invalid');
-            validity = false;
-        }
-
-         if (oCost === '' || oCost === null || !(!isNaN(parseFloat(oCost)) && isFinite(oCost)) ) {
+         if (oCost === '' || oCost === null || !$.isNumeric(oCost) || oCost <= 0 ) {
             $('#costId').addClass('is-invalid');
             validity = false;
          }  
-
-         if (oCost <= 0){
-            $('#costId').addClass('is-invalid');
-            validity = false;
-         }
 
          return validity;
     }
