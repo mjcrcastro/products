@@ -193,7 +193,7 @@ $(document).ready(function () {
         $('#amountId').val(null);
         $('#costId').val(null);
         
-        $('#productSelect').select2('open');
+        $('#productSelect').select2('open').select2('close');
 
         counter++;
 
