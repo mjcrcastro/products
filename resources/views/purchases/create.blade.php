@@ -193,6 +193,10 @@ $(document).ready(function () {
         $('#costId').val(null);
 
         counter++;
+
+        $('#costId').removeClass('is-invalid');
+        $('#amountId').removeClass('is-invalid');
+        $('#productSelect').removeClass('is-invalid');
        }else{
         alert('Registro no válido');
        }
