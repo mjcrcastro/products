@@ -83,9 +83,9 @@
                 </div>
 
                 <div  class="col-md btn-disabled">
-                    <a id="editProvider" class="btn btn-block text-nowrap" href="#" role="button">Editar
+                    <a id="editProvider" class="btn btn-block text-nowrap" href="#" role="button">Guardar Compra
                         <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
+                              <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#bi-save"/>
                         </svg>
                     </a>
                 </div>
@@ -134,35 +134,6 @@ $(document).ready(function () {
         ]
     });
     table //here we change 
-            .on('select', function (e, dt, type, indexes) {
-                var rowData = table.rows(indexes).data().toArray();
-                //manage edit button    
-                editButton.attr('href', '/providers/' + rowData[0]['id'] + '/edit');
-                editButton.addClass('btn-primary');
-                editButton.removeClass('btn-disabled');
-                //manage show button
-                showButton.attr('href', '/providers/' + rowData[0]['id']);
-                showButton.addClass('btn-primary');
-                showButton.removeClass('btn-disabled');
-
-                deleDiv.html('<form method="POST" action="/providers/' + rowData[0]['id'] + '" accept-charset="UTF-8">' +
-                        '<input name="_method" type="hidden" value="DELETE">' +
-                        '<input name="_token" type="hidden" value="' + $('meta[name="csrf-token"]').attr('content') + '">' +
-                        '<button class="btn btn-block text-nowrap btn-primary " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
-                        '</form>');
-            })
-            .on('deselect', function (e, dt, type, indexes) {
-                //manage edit button
-                editButton.attr('href', '#'); //remove href
-                editButton.removeClass('btn-primary'); //remove primary class
-                editButton.addClass('btn-disabled');  //add disabled class
-                //manage show button
-                showButton.attr('href', '#'); //remove href
-                showButton.removeClass('btn-primary'); //remove primary class
-                showButton.addClass('btn-disabled');  //add disabled class
-
-                deleDiv.html('<a class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></a>');
-            })
             .on('search.dt', function () {
                 table.rows('.selected').deselect();
             });
