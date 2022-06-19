@@ -12,6 +12,7 @@
 @section('main')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="editingMode" content ="{{ $editingMode }}">
 
 <div class="container-fluid px-4">
     <h1 class="mt-4">Nueva Compra</h1> 
@@ -83,10 +84,10 @@
                 </div>
 
                 <div  class="col-md btn-disabled">
-                    <a id="editProvider" class="btn btn-block text-nowrap  btn-primary" href="#" role="button">Guardar Compra
-                    <svg class="bi" width="24" height="24" fill="currentColor">
+                    <a id="storeInvoice" class="btn btn-block text-nowrap  btn-primary" href="#" role="button">Guardar Compra
+                        <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#save"/>
-                    </svg>
+                        </svg>
                     </a>
                 </div>
 
@@ -112,9 +113,6 @@
  * a datatables jQuery plugin on table id="purchasesTable"
  */
 $(document).ready(function () {
-    var editButton = $('#editProvider');
-    var showButton = $('#showProvider');
-    var deleDiv = $('#deleteProvider');
     var counter = 0;
     var table = $('#purchasesTable').DataTable({
         "select": {
@@ -144,58 +142,72 @@ $(document).ready(function () {
         ajax: {
             url: '{{ url("/select2ajax")  }}',
             dataType: 'json'
-                    // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });
 
     $('#addProduct').on('click', function () {
 
-       if (isValid($('#productSelect').val(), $('#amountId').val(), $('#costId').val())) {
-        table.row.add([
-            counter,
-            $('#productSelect').val(),
-            $('#productSelect option:selected').text(),
-            $('#amountId').val(),
-            $('#costId').val()]
-            ).draw(false);
+        if (isValid($('#productSelect').val(), $('#amountId').val(), $('#costId').val(), true)) {
+            table.row.add([
+                counter,
+                $('#productSelect').val(),
+                $('#productSelect option:selected').text(),
+                $('#amountId').val(),
+                $('#costId').val()]
+                    ).draw(false);
 
-        //clean up values
-        $('#productSelect').text(null);
-        $('#productSelect').val(null);
-        $('#amountId').val(null);
-        $('#costId').val(null);
-        
-        $('#productSelect').select2('open');
+            //clean up values
+            $('#productSelect').text(null);
+            $('#productSelect').val(null);
+            $('#amountId').val(null);
+            $('#costId').val(null);
 
-        counter++;
+            $('#productSelect').select2('open');
 
-        }else{
-        alert('Registro no válido');
-       }
-        
+            counter++;
+
+        } else {
+            alert('Registro no válido');
+        }
+
     });
 
-    function isValid (oProduct, oAmount, oCost) {
-        validity = true; 
+    function isValid(oProduct, oAmount, oCost, flagOnError) {
+        //validates product, amount and cost values, 
+        //when flagOnError is true, it also updates 
+        //the UI to notify of errors
+        validity = true;
         $('#costId').removeClass('is-invalid');
         $('#amountId').removeClass('is-invalid');
         $('#productSelect').removeClass('is-invalid');
         if (!$.isNumeric(oProduct)) {
-            $('#productSelect').addClass('is-invalid');
+            if (flagOnError) {
+                $('#productSelect').addClass('is-invalid');
+            }
             validity = false;
-         }  
-         if (!$.isNumeric(oAmount) || oAmount <= 0) {
-            $('#amountId').addClass('is-invalid');
-            validity = false;
-         } 
+        }
 
-         if (!$.isNumeric(oCost) || oCost <= 0 ) {
-            $('#costId').addClass('is-invalid');
+        if (!$.isNumeric(oAmount) || oAmount <= 0) {
+            if (flagOnError) {
+                $('#amountId').addClass('is-invalid');
+            }
             validity = false;
-         }  
+        }
 
-         return validity;
+        if (!$.isNumeric(oCost) || oCost <= 0) {
+            if (flagOnError) {
+                $('#costId').addClass('is-invalid');
+            }
+            validity = false;
+        }
+
+        return validity;
     }
+
+    // A $( document ).ready() block.
+    $(document).ready(function () {
+        alert($('meta[name="editingMode"]').attr('content'));
+    });
 });
 </script>
 

@@ -25,7 +25,8 @@ class PurchasesController extends Controller
     public function create()
     {
         //
-        return view('purchases.create');
+        $editingMode = "create";
+        return view('purchases.create', compact('editingMode'));
     }
 
     /**
@@ -56,9 +57,12 @@ class PurchasesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Purchase $purchase)
     {
         //
+        //
+        $editingMode = "edit";
+        return view('purchases.create', compact('editingMode','purchase'));
     }
 
     /**
