@@ -84,7 +84,7 @@
                 </div>
 
                 <div  class="col-md btn-disabled">
-                    <a id="storeInvoice" class="btn btn-block text-nowrap  btn-primary" href="#" role="button">Guardar Compra
+                    <a id="saveButton" class="btn btn-block text-nowrap  btn-primary" href="#" role="button">Guardar Compra
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#save"/>
                         </svg>
@@ -113,7 +113,8 @@
  * a datatables jQuery plugin on table id="purchasesTable"
  */
 $(document).ready(function () {
-    var counter = 0;
+    var counter = 1;
+    var itemData = new Array();
     var table = $('#purchasesTable').DataTable({
         "select": {
             style: 'single'
@@ -148,13 +149,16 @@ $(document).ready(function () {
     $('#addProduct').on('click', function () {
 
         if (isValid($('#productSelect').val(), $('#amountId').val(), $('#costId').val(), true)) {
-            table.row.add([
+
+            dtRow = new Array();
+            drRow = [
                 counter,
                 $('#productSelect').val(),
                 $('#productSelect option:selected').text(),
                 $('#amountId').val(),
-                $('#costId').val()]
-                    ).draw(false);
+                $('#costId').val()];
+
+            table.row.add(drRow).draw(false);
 
             //clean up values
             $('#productSelect').text(null);
@@ -206,8 +210,45 @@ $(document).ready(function () {
 
     // A $( document ).ready() block.
     $(document).ready(function () {
-        alert($('meta[name="editingMode"]').attr('content'));
+        //
+        //alert($('meta[name="editingMode"]').attr('content'));
+
+
     });
+
+    //posting purchase to the server
+    $('#saveButton').on('click', function () {
+
+        var rowsData = table.rows().data().toArray();
+        
+        debugger; 
+        
+        if ($('meta[name="editingMode"]').attr('content') === 'create') {
+            //when creating new purchase
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "{{ url('/api/purchase_store') }}",
+                data: JSON.stringify(rowsData),
+                success: function (data, status, xhr) {
+                    alert('Data uploaded');
+                    window.history.back();
+                },
+                async: false,
+                dataType: 'json'
+            });
+
+        } else if ($('meta[name="editingMode"]').attr('content') === 'edit') {
+            //When updading an existing purchase
+            $.ajax({
+                type: "PATCH",
+                url: url,
+                data: data,
+                success: success,
+                dataType: dataType});
+        }
+    });
+
 });
 </script>
 

@@ -40,3 +40,4 @@ Route::get('providers_ajax',[App\Http\Controllers\ProvidersController::class, 'p
 
 //**************Purchases routes
 Route::resource('purchases', PurchasesController::class);
+
