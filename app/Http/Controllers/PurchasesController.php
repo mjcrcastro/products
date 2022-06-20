@@ -51,9 +51,11 @@ class PurchasesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Purchase $purchase)
     {
         //
+        $purchaseTotal = $purchase->purchaseDetails()->sum(\DB::raw('purchase_details.amount * purchase_details.cost'));
+        return view('purchases.show', compact('purchase','purchaseTotal'));
     }
 
     /**
@@ -88,9 +90,12 @@ class PurchasesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Purchase $purchase)
     {
         //
+        Purchase::find($purchase->id)->purchaseDetails()->delete();
+        Purchase::find($purchase->id)->delete();
+        return redirect()->route('purchases.index');
     }
     
     public function indexPurchasesAjax(Request $request) {
@@ -98,15 +103,14 @@ class PurchasesController extends Controller
         //if ($request->ajax()) {//return json data only to ajax queries 
         $filter = $request->search['value'];
 
-        $columns = array('purchase_date', 'purchase_invoice_number'); //array to sort by, from incoming ajax request
+        $columns = array('name', 'buyer_name', 'purchase_invoice_number','purchase_date'); //array to sort by, from incoming ajax request
         //$orderedColumn calculates column name that needs to be sorted by Laravel before sending back to Datatables
         $orderedColumn = $request->order[0]['column'] == 0? 'purchase_date' : $columns[$request->order[0]['column'] - 1];
-
+        Log::info(print_r($orderedColumn, true));
         $purchase = Purchase::select('purchases.id', 'providers.name', 'buyers.buyer_name', 'purchases.purchase_invoice_number', 'purchases.purchase_date')
                 ->join('providers','provider_id','=','providers.id')
                 ->join('buyers','buyer_id','=','buyers.id')
                 ->where($orderedColumn, 'LIKE', "%" . $filter . "%")
-                ->orWhere('providers.name', 'LIKE', "%" . $filter . "%")
                 ->orderBy($orderedColumn, $request->order[0]['dir']) //order[0]['column'] contains the column to be ordered as selected on the US and sent to Laravel by DataTables vi ajax
                 ->get();
 

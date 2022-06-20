@@ -9,11 +9,13 @@
 <link href="/vendor/datatables/css/select.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
 @stop
 
-@section('main')
 
+@section('meta')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="editingMode" content ="{{ $editingMode }}">
+@stop
 
+@section('main')
 <div class="container-fluid px-4">
     <h1 class="mt-4">Nueva Compra</h1> 
 
@@ -32,7 +34,6 @@
                             <label class="input-group-text" for="inputGroupSelect01">Proveedor</label>
                         </div>
                         <select class="custom-select form-control" id="providerSelect">
-
                         </select>
                     </div>
                 </div>
@@ -100,6 +101,16 @@
                 </div>
             </div>
             <div class="row">
+
+                <div class="col-md">
+                    <a id="cancel" class="btn btn-block text-nowrap btn-secondary" href="/purchases/" role="button">
+                        <svg class="bi" width="24" height="24" fill="currentColor">
+                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-left"/>
+                        </svg>
+                        Cancelar  
+                    </a>
+                </div>
+
                 <div class="col-md">
                     <a id="addProduct" class="btn btn-block text-nowrap btn-primary" href="#" role="button">Agregar Producto  
                         <svg class="bi" width="24" height="24" fill="currentColor">
@@ -139,7 +150,6 @@
  */
 $(document).ready(function () {
     var counter = 1;
-    var itemData = new Array();
     var table = $('#purchasesTable').DataTable({
         "select": {
             style: 'single'
@@ -179,8 +189,6 @@ $(document).ready(function () {
             dataType: 'json'
         }
     });
-
-
     $('#addProduct').on('click', function () {
 
         if (isValid($('#productSelect').val(), $('#amountId').val(), $('#costId').val(), true)) {
@@ -192,29 +200,22 @@ $(document).ready(function () {
                 $('#productSelect option:selected').text(),
                 $('#amountId').val(),
                 $('#costId').val()];
-
             table.row.add(drRow).draw(false);
-
-            //clean up values
-            $('#productSelect').text(null);
-            $('#productSelect').val(null);
+//clean up values
+            $('#productSelect').val(null).trigger('change');
             $('#amountId').val(null);
             $('#costId').val(null);
-
             $('#productSelect').select2('open');
-
             counter++;
-
         } else {
             alert('Registro no válido');
         }
 
     });
-
     function isValid(oProduct, oAmount, oCost, flagOnError) {
-        //validates product, amount and cost values, 
-        //when flagOnError is true, it also updates 
-        //the UI to notify of errors
+//validates product, amount and cost values, 
+//when flagOnError is true, it also updates 
+//the UI to notify of errors
         validity = true;
         $('#costId').removeClass('is-invalid');
         $('#amountId').removeClass('is-invalid');
@@ -243,26 +244,15 @@ $(document).ready(function () {
         return validity;
     }
 
-    // A $( document ).ready() block.
-    $(document).ready(function () {
-        //
-        //alert($('meta[name="editingMode"]').attr('content'));
-
-
-    });
-
-    //posting purchase to the server
+//posting purchase to the server
     $('#saveButton').on('click', function () {
-
         var rowsData = table.rows().data().toArray();
-        
         var jsonData = {"provider_id": $('#providerSelect').val(),
-                        "purchase_date": $('#purchaseDate').val(),
-                        "purchase_invoice": $('#purchaseInvoiceNumber').val(),
-                        "products": rowsData};
-
+            "purchase_date": $('#purchaseDate').val(),
+            "purchase_invoice": $('#purchaseInvoiceNumber').val(),
+            "products": rowsData};
         if ($('meta[name="editingMode"]').attr('content') === 'create') {
-            //when creating new purchase
+//when creating new purchase
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
@@ -275,19 +265,49 @@ $(document).ready(function () {
                 async: false,
                 dataType: 'json'
             });
-
         } else if ($('meta[name="editingMode"]').attr('content') === 'edit') {
             //When updading an existing purchase
-            $.ajax({
-                type: "PATCH",
-                url: url,
-                data: data,
-                success: success,
-                dataType: dataType});
+            /* $.ajax({
+             type: "PATCH",
+             url: url,
+             data: data,
+             success: success,
+             dataType: dataType});*/
+
         }
     });
+    
+    if ($('meta[name="editingMode"]').attr('content') === 'edit') {
+        //need to add the option first, otherwise option will not be selected even when asked to do so
+        //?? '' makes the variables optional
+
+        //first the header
+        var newOption = new Option("{{ $purchase->provider->name ?? ''}}", "{{ $purchase->provider->id ?? ''}}", false, true);
+        $('#providerSelect').append(newOption).trigger('change');
+        $('#purchaseInvoiceNumber').val("{{ $purchase->purchase_invoice_number ?? ''}}");
+        $('#purchaseDate').val("{{ $purchase->purchase_date ?? ''}}");
+
+        //now the purchased products
+        
+        @if( $purchase->purchaseDetails->count() )
+            @foreach($purchase->purchaseDetails as $purchaseDetail)
+                dtRow = new Array();
+                drRow = [
+                    counter,
+                    {{ $purchaseDetail->product_id ?? ''}},
+                    '{{ $purchaseDetail->product->description ?? ''}}',
+                    {{ $purchaseDetail->amount ?? ''}},
+                    {{ $purchaseDetail->cost ?? '' }}];
+                table.row.add(drRow).draw(false); 
+                counter++;
+            @endforeach
+        @endif
+        
+    }
+    ;
 
 });
 </script>
+     @stop
 
-@stop
+

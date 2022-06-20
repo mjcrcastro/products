@@ -17,11 +17,15 @@ class Purchase extends Model
         
     ];
     
-    public function purchaseDetail() {
+    public function purchaseDetails() {
         return $this->hasMany(PurchaseDetail::class);
     }
     
     public function buyer() {
         return $this->belongsTo(Buyer::class);
+    }
+    
+    public function provider() {
+        return $this->belongsTo(Provider::class);
     }
 }
