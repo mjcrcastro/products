@@ -81,6 +81,12 @@
                                 </svg>
                                 <span>&nbspProveedores</span>
                             </a>
+                            <a class="nav-link" href="/buyers">
+                                <svg class="bi" width="16" height="16" fill="currentColor">
+                                <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#table"/>
+                                </svg>
+                                <span>&nbspCompradores</span>
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

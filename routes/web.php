@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProvidersController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\PurchasesController;
+use App\Http\Controllers\BuyersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,4 +41,10 @@ Route::get('providers_ajax',[App\Http\Controllers\ProvidersController::class, 'p
 
 //**************Purchases routes
 Route::resource('purchases', PurchasesController::class);
+Route::get('select_providers_ajax',[App\Http\Controllers\ProvidersController::class, 'providersSelect2Json']);
+Route::get('purchases_index',[App\Http\Controllers\PurchasesController::class, 'indexPurchasesAjax']);
 
+
+//**************Buyers routes
+Route::resource('buyers', BuyersController::class);
+Route::get('buyers_ajax',[App\Http\Controllers\BuyersController::class, 'buyersAjax']);

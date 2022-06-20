@@ -156,4 +156,15 @@ class ProvidersController extends Controller
         return response()->json($response);
         //}
     }
+    
+    public function providersSelect2Json(Request $request) {
+        
+        $term = ($request['term']?$request['term']:'');
+        
+        $providers = Provider::select('id','name as text')->where('name', 'like', '%' . $term . '%')->limit(10)->get(['id', 'text']);
+
+        $results = array('results' => $providers);
+
+        return response()->json($results);
+    }
 }

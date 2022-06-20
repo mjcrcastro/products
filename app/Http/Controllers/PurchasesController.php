@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use DB;
@@ -92,13 +93,42 @@ class PurchasesController extends Controller
         //
     }
     
+    public function indexPurchasesAjax(Request $request) {
+        //returns list of products
+        //if ($request->ajax()) {//return json data only to ajax queries 
+        $filter = $request->search['value'];
+
+        $columns = array('purchase_date', 'purchase_invoice_number'); //array to sort by, from incoming ajax request
+        //$orderedColumn calculates column name that needs to be sorted by Laravel before sending back to Datatables
+        $orderedColumn = $request->order[0]['column'] == 0? 'purchase_date' : $columns[$request->order[0]['column'] - 1];
+
+        $purchase = Purchase::select('purchases.id', 'providers.name', 'buyers.buyer_name', 'purchases.purchase_invoice_number', 'purchases.purchase_date')
+                ->join('providers','provider_id','=','providers.id')
+                ->join('buyers','buyer_id','=','buyers.id')
+                ->where($orderedColumn, 'LIKE', "%" . $filter . "%")
+                ->orWhere('providers.name', 'LIKE', "%" . $filter . "%")
+                ->orderBy($orderedColumn, $request->order[0]['dir']) //order[0]['column'] contains the column to be ordered as selected on the US and sent to Laravel by DataTables vi ajax
+                ->get();
+
+        $response['draw'] = $request->get('draw');
+
+        $response['recordsTotal'] = Purchase::all()->count();
+
+        $response['recordsFiltered'] = $purchase->count();
+
+        $response['data'] = array_slice($purchase->toArray(), $request->get('start'), $request->get('length'));
+
+        return response()->json($response);
+        //}
+    }
+    
     public function receivePurchasesJson(Request $request) {
 
         DB::beginTransaction(); //will rollback in case of failure
 
         $data = $request->json()->all();
         
-        Log::info(print_r($data, true));
+       // Log::info(print_r($data, true));
         
         if ($this->validPurchaseHeader($data)) {
             $newPurchase = $this->createPurchaseHeader($data);
@@ -124,28 +154,27 @@ class PurchasesController extends Controller
 
     private function createPurchaseHeader($data) {
         $newPurchase = new Purchase;
-        $newPurchase->invoicenumber_mobile = $data['invoicenumber'];
-        $newPurchase->customername = $data['customername'];
-        $newPurchase->invoicedate = $data['invoicedate'];
-        $newPurchase->invoicetotal = $data['invoicetotal'];
+        $newPurchase->provider_id = $data['provider_id'];
+        $newPurchase->purchase_date = $data['purchase_date'];
+        $newPurchase->purchase_invoice_number = $data['purchase_invoice'];
 
         return $newPurchase;
     }
 
     private function createInvoiceDetail($itemProduct, $purchaseId) {
         $purchaseDetail = new PurchaseDetail;
-        $purchaseDetail->invoice_id = $purchaseId;
-        $purchaseDetail->amount = $itemProduct['amount'];
-        $purchaseDetail->price = $itemProduct['cost'];
+        $purchaseDetail->purchase_id = $purchaseId;
+        $purchaseDetail->product_id = $itemProduct[1];
+        $purchaseDetail->amount = $itemProduct[3];
+        $purchaseDetail->cost = $itemProduct[4];
         return $purchaseDetail;
     }
 
     private function validPurchaseHeader($data) {
         $purchaseValidator = Validator::make($data, [
-                    'inovicenumber_mobile' => 'required',
-                    'customername' => 'required',
-                    'invoicedate' => 'required',
-                    'invoicetotal' => 'required'
+                    'provider_id' => 'required',
+                    'purchase_date' => 'required',
+                    'purchase_invoice_number' => 'required'
                         ]
         );
 
@@ -181,7 +210,7 @@ class PurchasesController extends Controller
     private function jsonInvoiceStored($newPurchase) {
         return response()->json([
                     "message" => "Invoice record created",
-                    "invoiceNum" => $newPurchase->invoicenumber_mobile
+                    "purchaseId" => $newPurchase->id
                         ], 201);
     }
     

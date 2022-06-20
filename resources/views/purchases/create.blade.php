@@ -18,12 +18,37 @@
     <h1 class="mt-4">Nueva Compra</h1> 
 
     <div class="card mb-4">
-        <ol class="breadcrumb mb-4">
+        <ol class="breadcrumb mb-2">
             <li class="breadcrumb-item"><a href="index.html">Inventario</a></li>
             <li class="breadcrumb-item"><a href=" {{ route('purchases.index')}} ">Listado de Compras</a></li>
             <li class="breadcrumb-item active">Nueva Compra</li> 
         </ol>
         <div class="card-body">
+
+            <div class="row mb-2">
+                <div class="col-md">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Proveedor</label>
+                        </div>
+                        <select class="custom-select form-control" id="providerSelect">
+
+                        </select>
+                    </div>
+                </div>
+
+                <div  class="col-md">
+                    <div class="input-group mb-3">
+                        <input id="purchaseInvoiceNumber" type="text" class="form-control" placeholder="Factura de Proveedor" aria-label="Cantidad" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div id ="cost" class="col-md">
+                    <div class="input-group mb-3">
+                        <input id="purchaseDate" type="text" class="form-control" placeholder="Fecha de Compra" aria-label="Costo" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </div>
+
             <table class="table display" id="purchasesTable" width="100%" cellspacing="0">
                 <thead>
                     <tr >
@@ -146,6 +171,16 @@ $(document).ready(function () {
         }
     });
 
+    $("#providerSelect").select2({
+        theme: "bootstrap4",
+        selectOnClose: true,
+        ajax: {
+            url: '{{ url("/select_providers_ajax")  }}',
+            dataType: 'json'
+        }
+    });
+
+
     $('#addProduct').on('click', function () {
 
         if (isValid($('#productSelect').val(), $('#amountId').val(), $('#costId').val(), true)) {
@@ -221,17 +256,20 @@ $(document).ready(function () {
 
         var rowsData = table.rows().data().toArray();
         
-        debugger; 
-        
+        var jsonData = {"provider_id": $('#providerSelect').val(),
+                        "purchase_date": $('#purchaseDate').val(),
+                        "purchase_invoice": $('#purchaseInvoiceNumber').val(),
+                        "products": rowsData};
+
         if ($('meta[name="editingMode"]').attr('content') === 'create') {
             //when creating new purchase
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
                 url: "{{ url('/api/purchase_store') }}",
-                data: JSON.stringify(rowsData),
+                data: JSON.stringify(jsonData),
                 success: function (data, status, xhr) {
-                    alert('Data uploaded');
+                    alert('Compra Registrada');
                     window.history.back();
                 },
                 async: false,

@@ -11,31 +11,22 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Compras</h1> 
-
-    <div class="card mb-4">
-         <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Inventario</a></li>
-        <li class="breadcrumb-item active">Listado de Compras</li> 
-    </ol>
+    <div class="card mb-0">
+        <ol class="breadcrumb mb-1">
+            <li class="breadcrumb-item active">Listado de Compradores</li> 
+        </ol>
         <div class="card-body">
-            <table class="table display" id="purchasesTable" width="100%" cellspacing="0">
+            <table class="table display" id="buyersTable" width="100%" cellspacing="0">
                 <thead>
                     <tr >
                         <th></th>
-                        <th>Proveedor</th>
-                        <th>Comprador</th>
-                        <th>Factura</th>
-                        <th>Fecha</th>
+                        <th>Nombre</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th></th>
-                        <th>Proveedor</th>
-                        <th>Comprador</th>
-                        <th>Factura</th>
-                        <th>Fecha</th>
+                        <th>Nombre</th>
                     </tr>
                 </tfoot>
             </table>
@@ -43,32 +34,32 @@
     </div>
 </div>
 
-<div class="card shadow mb-4">
+<div class="card shadow mb-1">
     <div class="card-header py-3">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md">
-                    <a class="btn btn-block text-nowrap btn-primary" href="{{ route('purchases.create')}}" role="button">Nueva Compra  
+                    <a class="btn btn-block text-nowrap btn-primary" href="{{ route('buyers.create')}}" role="button">Nuevo Comprador  
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
                         </svg>
                     </a>
                 </div>
                 <div  class="col-md">
-                    <a id="showProvider" class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
+                    <a id="showBuyer" class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
                         <svg aling ="class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
                         </svg>
                     </a>
                 </div>
                 <div  class="col-md btn-disabled">
-                    <a id="editProvider" class="btn btn-block text-nowrap" href="#" role="button">Editar
+                    <a id="editBuyer" class="btn btn-block text-nowrap" href="#" role="button">Editar
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
                         </svg>
                     </a>
                 </div>
-                <div id ="deleteProvider" class="col-md btn-disabled">
+                <div id ="deleteBuyer" class="col-md btn-disabled">
                     <a class="btn btn-block text-nowrap" href="#" role="button">Borrar
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
@@ -96,17 +87,17 @@
  * a datatables jQuery plugin on table id="example"
  */
 $(document).ready(function () {
-    var editButton = $('#editProvider');
-    var showButton = $('#showProvider');
-    var deleDiv = $('#deleteProvider');
-    var table = $('#purchasesTable').DataTable({
+    var editButton = $('#editBuyer');
+    var showButton = $('#showBuyer');
+    var deleDiv = $('#deleteBuyer');
+    var table = $('#buyersTable').DataTable({
         "processing": true,
         "serverSide": true,
         "select": {
             style: 'single'
         },
         "ajax": {
-            "url": "{{ url('/purchases_index') }}",
+            "url": "{{ url('/buyers_ajax') }}",
             "type": "GET",
             'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
@@ -120,25 +111,22 @@ $(document).ready(function () {
         ],
         "columns": [//tells where (from data) the columns are to be placed
             {"data": "id"},
-            {"data": "name"},
-            {"data": "buyer_name"},
-            {"data": "purchase_invoice_number"},
-            {"data": "purchase_date"}
+            {"data": "buyer_name"}
         ]
     });
     table //here we change 
             .on('select', function (e, dt, type, indexes) {
                 var rowData = table.rows(indexes).data().toArray();
                 //manage edit button    
-                editButton.attr('href', '/purchases/' + rowData[0]['id'] + '/edit');
+                editButton.attr('href', '/buyers/' + rowData[0]['id'] + '/edit');
                 editButton.addClass('btn-primary');
                 editButton.removeClass('btn-disabled');
                 //manage show button
-                showButton.attr('href', '/purchases/' + rowData[0]['id']);
+                showButton.attr('href', '/buyers/' + rowData[0]['id']);
                 showButton.addClass('btn-primary');
                 showButton.removeClass('btn-disabled');
 
-                deleDiv.html('<form method="POST" action="/purchases/' + rowData[0]['id'] + '" accept-charset="UTF-8">' +
+                deleDiv.html('<form method="POST" action="/buyers/' + rowData[0]['id'] + '" accept-charset="UTF-8">' +
                         '<input name="_method" type="hidden" value="DELETE">' +
                         '<input name="_token" type="hidden" value="' + $('meta[name="csrf-token"]').attr('content') + '">' +
                         '<button class="btn btn-block text-nowrap btn-primary " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
