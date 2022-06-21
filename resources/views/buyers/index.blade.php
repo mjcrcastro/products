@@ -11,63 +11,67 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="container-fluid px-4">
-    <div class="card mb-0">
-        <ol class="breadcrumb mb-1">
-            <li class="breadcrumb-item active">Listado de Compradores</li> 
-        </ol>
-        <div class="card-body">
-            <table class="table display" id="buyersTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr >
-                        <th></th>
-                        <th>Nombre</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th></th>
-                        <th>Nombre</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+    <h1 class="mt-2">Compradores</h1> 
+    <div class="card shadow">
+        <div class="card-header py-2">
+            <ol class="breadcrumb mb-0"">
+                <li class="breadcrumb-item active">Listado de Compradores</li> 
+            </ol>
+        </div> 
     </div>
-</div>
+    <div class="card py-4 px-4">
+        <table class="table display" id="buyersTable" width="100%" cellspacing="0">
+            <thead>
+                <tr >
+                    <th></th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th>Nombre</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 
-<div class="card shadow mb-1">
-    <div class="card-header py-3">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md">
-                    <a class="btn btn-block text-nowrap btn-primary" href="{{ route('buyers.create')}}" role="button">Nuevo Comprador  
-                        <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
-                        </svg>
-                    </a>
-                </div>
-                <div  class="col-md">
-                    <a id="showBuyer" class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
-                        <svg aling ="class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
-                        </svg>
-                    </a>
-                </div>
-                <div  class="col-md btn-disabled">
-                    <a id="editBuyer" class="btn btn-block text-nowrap" href="#" role="button">Editar
-                        <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
-                        </svg>
-                    </a>
-                </div>
-                <div id ="deleteBuyer" class="col-md btn-disabled">
-                    <a class="btn btn-block text-nowrap" href="#" role="button">Borrar
-                        <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
-                        </svg>
-                    </a>
+    <div class="card shadow mb-1">
+        <div class="card-header py-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md">
+                        <a class="btn col-12 text-nowrap btn-primary" href="{{ route('buyers.create')}}" role="button">Nuevo Comprador  
+                            <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div  class="col-md">
+                        <a id="showBuyer" class="btn col-12 text-nowrap btn-disabled" href="#" role="button">Ver 
+                            <svg aling ="class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div  class="col-md btn-disabled">
+                        <a id="editBuyer" class="btn col-12 text-nowrap" href="#" role="button">Editar
+                            <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div id ="deleteBuyer" class="col-md btn-disabled">
+                        <a class="btn col-12 text-nowrap" href="#" role="button">Borrar
+                            <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>
@@ -97,7 +101,7 @@ $(document).ready(function () {
             style: 'single'
         },
         "ajax": {
-            "url": "{{ url('/buyers_ajax') }}",
+            "url": "{{ url('/buyers_index') }}",
             "type": "GET",
             'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
@@ -129,7 +133,7 @@ $(document).ready(function () {
                 deleDiv.html('<form method="POST" action="/buyers/' + rowData[0]['id'] + '" accept-charset="UTF-8">' +
                         '<input name="_method" type="hidden" value="DELETE">' +
                         '<input name="_token" type="hidden" value="' + $('meta[name="csrf-token"]').attr('content') + '">' +
-                        '<button class="btn btn-block text-nowrap btn-primary " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
+                        '<button class="btn col-12 text-nowrap btn-warning " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
                         '</form>');
             })
             .on('deselect', function (e, dt, type, indexes) {

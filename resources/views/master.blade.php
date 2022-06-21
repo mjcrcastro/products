@@ -11,7 +11,7 @@
         
         <title>Facturación</title>
         <link href="/css/styles.css" rel="stylesheet" />
-        <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"  />
+        <link href="/vendor/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet"  />
 
         @yield('css')
 
@@ -108,7 +108,7 @@
         <script src="/js/scripts.js"></script>
         <!-- Bootstrap core JavaScript-->
         <script src="/vendor/jquery/jquery.min.js"></script>
-        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/vendor/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
         @yield('scripts')
     </body>
 </html>

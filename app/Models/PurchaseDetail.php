@@ -10,9 +10,10 @@ class PurchaseDetail extends Model
     use HasFactory;
     
     protected $fillable = [
+        'purchase_id', 
         'product_id', 
         'amount', 
-        'price'
+        'cost'
     ];
     
     public function invoice(){

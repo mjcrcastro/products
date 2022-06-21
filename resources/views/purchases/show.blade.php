@@ -58,7 +58,7 @@
         <td align='left'>  {{ $purchaseDetail->product->description }}</td> 
         <td align='right'> {{ $purchaseDetail->amount }}</td> 
         <td align='right'> {{ number_format ($purchaseDetail->cost,2) }}</td> 
-        <td align='right'> {{ number_format($purchaseDetail->amount*$purchaseDetail->cost,2) }}</td> 
+        <td align='right'> {{ number_format($purchaseDetail->cost,2) }}</td> 
     </tr> 
     @endforeach
     @endif

@@ -11,67 +11,74 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="container-fluid px-4">
-    <div class="card mb-0">
-        <ol class="breadcrumb mb-1">
-            <li class="breadcrumb-item active">Listado de Productos</li> 
-        </ol>
-        <div class="card-body">
-            <table class="table display" id="productsTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr >
-                        <th></th>
-                        <th>Código</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th></th>
-                        <th>Código</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-</div>
 
-<div class="card shadow mb-1">
-    <div class="card-header py-3">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md">
-                    <a class="btn btn-block text-nowrap btn-primary" href="{{ route('products.create')}}" role="button">Nuevo Producto  
-                        <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
-                        </svg>
-                    </a>
-                </div>
-                <div  class="col-md">
-                    <a id="showProduct" class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
-                        <svg aling ="class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
-                        </svg>
-                    </a>
-                </div>
-                <div  class="col-md btn-disabled">
-                    <a id="editProduct" class="btn btn-block text-nowrap" href="#" role="button">Editar
-                        <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
-                        </svg>
-                    </a>
-                </div>
-                <div id ="deleteProduct" class="col-md btn-disabled">
-                    <a class="btn btn-block text-nowrap" href="#" role="button">Borrar
-                        <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
-                        </svg>
-                    </a>
+    <h1 class="mt-2">Productos</h1> 
+    <div class="card shadow">
+        <div class="card-header">
+            <ol class="breadcrumb mb-0"">
+                <li class="breadcrumb-item active">Listado de Productos</li> 
+            </ol>
+        </div>    
+    </div>
+    <div class="card py-4 px-4">
+        <table class="table display" id="productsTable" width="100%" cellspacing="0">
+            <thead>
+                <tr >
+                    <th></th>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+
+    <div class="card shadow mb-1">
+        <div class="card-header py-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md">
+                        <a class="btn col-12 text-nowrap btn-primary" href="{{ route('products.create')}}" role="button">Nuevo Producto  
+                            <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div  class="col-md">
+                        <a id="showProduct" class="col-12 btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
+                            <svg aling ="class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div  class="col btn-disabled">
+                        <a id="editProduct" class="btn col-12 text-nowrap" href="#" role="button">Editar
+                            <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="col btn-disabled" id ="deleteProduct" >
+                        <a class="btn col-12 text-nowrap" href="#" role="button">Borrar
+                            <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>
@@ -111,8 +118,8 @@ $(document).ready(function () {
                 "targets": [0],
                 "visible": false,
                 "searchable": false
-            },{
-                "targets":[3],
+            }, {
+                "targets": [3],
                 "className": 'text-right',
                 "render": $.fn.dataTable.render.number(',', '.', 2, '')//formats the number
             }
@@ -139,7 +146,7 @@ $(document).ready(function () {
                 deleDiv.html('<form method="POST" action="/products/' + rowData[0]['id'] + '" accept-charset="UTF-8">' +
                         '<input name="_method" type="hidden" value="DELETE">' +
                         '<input name="_token" type="hidden" value="' + $('meta[name="csrf-token"]').attr('content') + '">' +
-                        '<button class="btn btn-block text-nowrap btn-primary " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
+                        '<button class="btn col-12 text-nowrap btn-warning " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
                         '</form>');
             })
             .on('deselect', function (e, dt, type, indexes) {

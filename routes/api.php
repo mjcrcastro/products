@@ -20,4 +20,4 @@ use Illuminate\Support\Facades\Route;
 //Route to receive invoices from the Invoices mobile app
 Route::post('invoice', [App\Http\Controllers\InvoicesController::class, 'receiveInvoicesJson']);
 
-Route::post('purchase_store', [App\Http\Controllers\PurchasesController::class, 'receivePurchasesJson']);
+Route::get('get_purchase/{id}', [App\Http\Controllers\PurchasesController::class, 'returnPurchase']);

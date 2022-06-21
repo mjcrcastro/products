@@ -18,7 +18,7 @@ class CreatePurchasesTable extends Migration
             $table->integer('provider_id')->references('id')->on('providers');
             $table->date('purchase_date');
             $table->string('purchase_invoice_number');
-            $table->integer('buyer_id')->default(1);
+            $table->integer('buyer_id')->default(1)>references('id')->on('buyers');
             $table->timestamps();
         });
     }

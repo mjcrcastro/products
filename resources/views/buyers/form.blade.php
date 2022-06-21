@@ -11,4 +11,4 @@
 <p></p>
 
 {{ Form::submit('Guardar', array('class'=>'btn  btn-primary col-xs-6')) }}
-{{ link_to_route('buyers.index', 'Cancelar', [],array('class'=>'btn  btn-outline-info col-xs-6')) }}
+{{ link_to_route('buyers.index', 'Cancelar', [],array('class'=>'btn  btn-outline-secondary col-xs-6')) }}

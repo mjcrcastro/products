@@ -22,7 +22,7 @@
                 </div>
             </div>
             <button id="printPageButton" class='btn btn-block text-nowrap btn-primary' onClick="window.print();">Imprimir</button>
-            {{ link_to_route('products.index','Volver',null,array('id'=>'productsIndex','class'=>'btn btn-block text-nowrap btn-secondary')) }}
+            {{ link_to_route('products.index','Volver',null,array('id'=>'productsIndex','class'=>'btn col-12 text-nowrap btn-outline-secondary')) }}
         </div>
 
     </body> 

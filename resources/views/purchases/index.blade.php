@@ -11,72 +11,74 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Compras</h1> 
-
-    <div class="card mb-4">
-         <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">Inventario</a></li>
-        <li class="breadcrumb-item active">Listado de Compras</li> 
-    </ol>
-        <div class="card-body">
-            <table class="table display" id="purchasesTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr >
-                        <th></th>
-                        <th>Proveedor</th>
-                        <th>Comprador</th>
-                        <th>Factura</th>
-                        <th>Fecha</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th></th>
-                        <th>Proveedor</th>
-                        <th>Comprador</th>
-                        <th>Factura</th>
-                        <th>Fecha</th>
-                    </tr>
-                </tfoot>
-            </table>
+    <h1 class="mt-2">Compras</h1> 
+    <div class="card shadow mb-0">
+        <div class="card-header mb-0">
+            <ol class="breadcrumb mb-0"">
+                <li class="breadcrumb-item"><a href="index.html">Inventario</a></li>
+                <li class="breadcrumb-item active">Listado de Compras</li> 
+            </ol>
         </div>
     </div>
-</div>
+    <div class="card py-4 px-4">
+        <table class="table display" id="purchasesTable" width="100%" cellspacing="0">
+            <thead>
+                <tr >
+                    <th></th>
+                    <th>Proveedor</th>
+                    <th>Comprador</th>
+                    <th>Factura</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th>Proveedor</th>
+                    <th>Comprador</th>
+                    <th>Factura</th>
+                    <th>Fecha</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md">
-                    <a class="btn btn-block text-nowrap btn-primary" href="{{ route('purchases.create')}}" role="button">Nueva Compra  
-                        <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
-                        </svg>
-                    </a>
-                </div>
-                <div  class="col-md">
-                    <a id="showProvider" class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
-                        <svg aling ="class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
-                        </svg>
-                    </a>
-                </div>
-                <div  class="col-md btn-disabled">
-                    <a id="editProvider" class="btn btn-block text-nowrap" href="#" role="button">Editar
-                        <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
-                        </svg>
-                    </a>
-                </div>
-                <div id ="deleteProvider" class="col-md btn-disabled">
-                    <a class="btn btn-block text-nowrap" href="#" role="button">Borrar
-                        <svg class="bi" width="24" height="24" fill="currentColor">
-                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
-                        </svg>
-                    </a>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md">
+                        <a class="btn btn-block text-nowrap btn-primary" href="{{ route('purchases.create')}}" role="button">Nueva Compra  
+                            <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div  class="col-md">
+                        <a id="showProvider" class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
+                            <svg aling ="class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div  class="col-md btn-disabled">
+                        <a id="editProvider" class="btn btn-block text-nowrap" href="#" role="button">Editar
+                            <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div id ="deleteProvider" class="col-md btn-disabled">
+                        <a class="btn btn-block text-nowrap" href="#" role="button">Borrar
+                            <svg class="bi" width="24" height="24" fill="currentColor">
+                            <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>

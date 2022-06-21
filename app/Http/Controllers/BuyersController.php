@@ -149,4 +149,15 @@ class BuyersController extends Controller
         return response()->json($response);
         //}
     }
+    
+    public function buyersSelect2Json(Request $request) {
+        
+        $term = ($request['term']?$request['term']:'');
+        
+        $buyers = Buyer::select('id','buyer_name as text')->where('buyer_name', 'like', '%' . $term . '%')->limit(10)->get(['id', 'text']);
+
+        $results = array('results' => $buyers);
+
+        return response()->json($results);
+    }
 }

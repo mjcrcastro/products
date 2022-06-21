@@ -13,6 +13,7 @@
 @section('meta')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="editingMode" content ="{{ $editingMode }}">
+<meta name="purchaseId" content ="{{ $id ?? '' }}">
 @stop
 
 @section('main')
@@ -38,14 +39,30 @@
                     </div>
                 </div>
 
+                <div class="col-md">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Comprador</label>
+                        </div>
+                        <select class="custom-select form-control" id="buyerSelect">
+                        </select>
+                    </div>
+                </div>
+
                 <div  class="col-md">
                     <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Factura</label>
+                        </div>
                         <input id="purchaseInvoiceNumber" type="text" class="form-control" placeholder="Factura de Proveedor" aria-label="Cantidad" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div id ="cost" class="col-md">
                     <div class="input-group mb-3">
-                        <input id="purchaseDate" type="text" class="form-control" placeholder="Fecha de Compra" aria-label="Costo" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Fecha</label>
+                        </div>
+                        <input id="purchaseDate" type="date" class="form-control" placeholder="Fecha de Compra" aria-label="Costo" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -91,19 +108,25 @@
 
                 <div  class="col-md">
                     <div class="input-group mb-3">
-                        <input id="amountId" type="text" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Cantidad</label>
+                        </div>
+                        <input id="amountId" type="text" class="form-control" placeholder="Cantidad comprada" aria-label="Cantidad" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div id ="cost" class="col-md">
                     <div class="input-group mb-3">
-                        <input id="costId" type="text" class="form-control" placeholder="Costo" aria-label="Costo" aria-describedby="basic-addon1">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Costo</label>
+                        </div>
+                        <input id="costId" type="text" class="form-control" placeholder="Costo total (no unitario)" aria-label="Costo" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
             <div class="row">
 
                 <div class="col-md">
-                    <a id="cancel" class="btn btn-block text-nowrap btn-secondary" href="/purchases/" role="button">
+                    <a id="cancel" class="btn col-12 text-nowrap btn-secondary" href="/purchases/" role="button">
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-left"/>
                         </svg>
@@ -112,15 +135,23 @@
                 </div>
 
                 <div class="col-md">
-                    <a id="addProduct" class="btn btn-block text-nowrap btn-primary" href="#" role="button">Agregar Producto  
+                    <a id="addProduct" class="btn col-12 text-nowrap btn-primary" href="#" role="button">Agregar Producto  
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
                         </svg>
                     </a>
                 </div>
+                
+                <div class="col-md">
+                    <a id="deleteProduct" class="btn col-12 text-nowrap btn-warning" href="#" role="button">Borrar Producto  
+                        <svg class="bi" width="24" height="24" fill="currentColor">
+                        <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
+                        </svg>
+                    </a>
+                </div>
 
                 <div  class="col-md btn-disabled">
-                    <a id="saveButton" class="btn btn-block text-nowrap  btn-primary" href="#" role="button">Guardar Compra
+                    <a id="saveButton" class="btn col-12 text-nowrap  btn-primary" href="#" role="button">Guardar Compra
                         <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#save"/>
                         </svg>
@@ -164,28 +195,63 @@ $(document).ready(function () {
                 "targets": [1],
                 "visible": false,
                 "searchable": false
+            },
+            {
+                "targets": [2],
+                "visible": true,
+                "className": 'text-left'
+            },
+            {
+                "targets": [3],
+                "visible": true,
+                "className": 'text-right',
+                "render": $.fn.dataTable.render.number(',', '.', 2, '')//formats the number
+            },
+            {
+                "targets": [4],
+                "visible": true,
+                "className": 'text-right',
+                "render": $.fn.dataTable.render.number(',', '.', 2, '')//formats the number
             }
+            
         ]
     });
+
     table //here we change 
             .on('search.dt', function () {
                 table.rows('.selected').deselect();
             });
-
+            
+            
+    //remove row when told so
+    $('#deleteProduct').click(function () {
+        table.row('.selected').remove().draw(false);
+    });
+    
     $("#productSelect").select2({
         theme: "bootstrap4",
+        placeholder: "Seleccione el producto",
         selectOnClose: true,
         ajax: {
             url: '{{ url("/select2ajax")  }}',
             dataType: 'json'
         }
     });
-
     $("#providerSelect").select2({
         theme: "bootstrap4",
+        placeholder: "Seleccione el proveedor",
         selectOnClose: true,
         ajax: {
             url: '{{ url("/select_providers_ajax")  }}',
+            dataType: 'json'
+        }
+    });
+    $("#buyerSelect").select2({
+        theme: "bootstrap4",
+        placeholder: "Seleccione el comprador",
+        selectOnClose: true,
+        ajax: {
+            url: '{{ url("/select_buyers_ajax")  }}',
             dataType: 'json'
         }
     });
@@ -244,70 +310,98 @@ $(document).ready(function () {
         return validity;
     }
 
-//posting purchase to the server
+    //posting purchase to the server
     $('#saveButton').on('click', function () {
         var rowsData = table.rows().data().toArray();
-        var jsonData = {"provider_id": $('#providerSelect').val(),
-            "purchase_date": $('#purchaseDate').val(),
-            "purchase_invoice": $('#purchaseInvoiceNumber').val(),
-            "products": rowsData};
+
         if ($('meta[name="editingMode"]').attr('content') === 'create') {
-//when creating new purchase
+            //when creating new purchase
+            var jsonDataNew = {"provider_id": $('#providerSelect').val(),
+                "buyer_id": $('#buyerSelect').val(),
+                "purchase_date": $('#purchaseDate').val(),
+                "purchase_invoice": $('#purchaseInvoiceNumber').val(),
+                "products": rowsData};
             $.ajax({
                 type: "POST",
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 contentType: "application/json",
-                url: "{{ url('/api/purchase_store') }}",
-                data: JSON.stringify(jsonData),
+                url: "{{ url('/purchases') }}",
+                data: JSON.stringify(jsonDataNew),
                 success: function (data, status, xhr) {
                     alert('Compra Registrada');
-                    window.history.back();
+                    window.location.href = '{{ url("/purchases")  }}';
                 },
                 async: false,
                 dataType: 'json'
             });
         } else if ($('meta[name="editingMode"]').attr('content') === 'edit') {
             //When updading an existing purchase
-            /* $.ajax({
-             type: "PATCH",
-             url: url,
-             data: data,
-             success: success,
-             dataType: dataType});*/
+            //add purchase_id
+            debugger;
+            var jsonDataEdit = {"provider_id": $('#providerSelect').val(),
+                "buyer_id": $('#buyerSelect').val(),
+                "purchase_id": $('meta[name="purchaseId"]').attr('content'),
+                "purchase_date": $('#purchaseDate').val(),
+                "purchase_invoice": $('#purchaseInvoiceNumber').val(),
+                "products": rowsData};
+            debugger;
+            $.ajax({
+                type: "PATCH",
+                'headers': {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('/purchases') }}/" + $('meta[name="purchaseId"]').attr('content'),
+                data: JSON.stringify(jsonDataEdit),
+                success: function (data, status, xhr) {
+                    alert('Compra Actualizada');
+                    window.location.href = '{{ url("/purchases")  }}';
+                },
+                async: false,
+                dataType: 'json'});
 
         }
     });
-    
+    //retrieve purchase when in editing mode
     if ($('meta[name="editingMode"]').attr('content') === 'edit') {
-        //need to add the option first, otherwise option will not be selected even when asked to do so
-        //?? '' makes the variables optional
+        //Retrieve the Purchase data, 
+        $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            url: "{{ url('/api/get_purchase') }}/" + $('meta[name="purchaseId"]').attr('content'),
+            success: function (data, status, xhr) {
+                debugger;
+                //first the header
+                //need to add the option first, otherwise option will not be selected even when asked to do so
+                //for Provider
+                var newOptionProvider = new Option(data['purchase']['provider_name'], data['purchase']['provider_id'], false, true);
+                //for Buyer
+                var newOptionBuyer = new Option(data['purchase']['buyer_name'], data['purchase']['buyer_id'], false, true);
+                //
+                $('#providerSelect').append(newOptionProvider);
+                $('#buyerSelect').append(newOptionBuyer);
+                $('#purchaseInvoiceNumber').val(data['purchase']['purchase_invoice_number']);
+                $('#purchaseDate').val(data['purchase']['purchase_date']);
+                debugger;
+                for (var i = 0; i < data['purchase_details'].length; i++) {
+                    dtRow = new Array();
+                    drRow = [
+                        counter,
+                        data['purchase_details'][i]['product_id'],
+                        data['purchase_details'][i]['product_description'],
+                        data['purchase_details'][i]['amount'],
+                        data['purchase_details'][i]['cost']
+                    ];
+                    table.row.add(drRow).draw(false);
+                    counter++;
+                }
 
-        //first the header
-        var newOption = new Option("{{ $purchase->provider->name ?? ''}}", "{{ $purchase->provider->id ?? ''}}", false, true);
-        $('#providerSelect').append(newOption).trigger('change');
-        $('#purchaseInvoiceNumber').val("{{ $purchase->purchase_invoice_number ?? ''}}");
-        $('#purchaseDate').val("{{ $purchase->purchase_date ?? ''}}");
-
-        //now the purchased products
-        
-        @if( $purchase->purchaseDetails->count() )
-            @foreach($purchase->purchaseDetails as $purchaseDetail)
-                dtRow = new Array();
-                drRow = [
-                    counter,
-                    {{ $purchaseDetail->product_id ?? ''}},
-                    '{{ $purchaseDetail->product->description ?? ''}}',
-                    {{ $purchaseDetail->amount ?? ''}},
-                    {{ $purchaseDetail->cost ?? '' }}];
-                table.row.add(drRow).draw(false); 
-                counter++;
-            @endforeach
-        @endif
-        
+            },
+            async: false,
+            dataType: 'json'
+        });
     }
     ;
-
 });
 </script>
-     @stop
+@stop
 
 

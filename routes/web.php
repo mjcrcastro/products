@@ -47,4 +47,5 @@ Route::get('purchases_index',[App\Http\Controllers\PurchasesController::class, '
 
 //**************Buyers routes
 Route::resource('buyers', BuyersController::class);
-Route::get('buyers_ajax',[App\Http\Controllers\BuyersController::class, 'buyersAjax']);
+Route::get('select_buyers_ajax',[App\Http\Controllers\BuyersController::class, 'buyersSelect2Json']);
+Route::get('buyers_index',[App\Http\Controllers\BuyersController::class, 'buyersAjax']);
