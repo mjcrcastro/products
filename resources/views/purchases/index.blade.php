@@ -48,28 +48,28 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md">
-                        <a class="btn btn-block text-nowrap btn-primary" href="{{ route('purchases.create')}}" role="button">Nueva Compra  
+                        <a class="btn col-12 text-nowrap btn-primary" href="{{ route('purchases.create')}}" role="button">Nueva Compra  
                             <svg class="bi" width="24" height="24" fill="currentColor">
                             <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#plus-circle"/>
                             </svg>
                         </a>
                     </div>
                     <div  class="col-md">
-                        <a id="showProvider" class="btn btn-block text-nowrap btn-disabled" href="#" role="button">Ver 
+                        <a id="showProvider" class="btn col-12 text-nowrap btn-disabled" href="#" role="button">Ver 
                             <svg aling ="class="bi" width="24" height="24" fill="currentColor">
                             <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#arrow-right-circle"/>
                             </svg>
                         </a>
                     </div>
                     <div  class="col-md btn-disabled">
-                        <a id="editProvider" class="btn btn-block text-nowrap" href="#" role="button">Editar
+                        <a id="editProvider" class="btn col-12 text-nowrap" href="#" role="button">Editar
                             <svg class="bi" width="24" height="24" fill="currentColor">
                             <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#pencil-square"/>
                             </svg>
                         </a>
                     </div>
                     <div id ="deleteProvider" class="col-md btn-disabled">
-                        <a class="btn btn-block text-nowrap" href="#" role="button">Borrar
+                        <a class="btn col-12 text-nowrap" href="#" role="button">Borrar
                             <svg class="bi" width="24" height="24" fill="currentColor">
                             <use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/>
                             </svg>
@@ -143,7 +143,7 @@ $(document).ready(function () {
                 deleDiv.html('<form method="POST" action="/purchases/' + rowData[0]['id'] + '" accept-charset="UTF-8">' +
                         '<input name="_method" type="hidden" value="DELETE">' +
                         '<input name="_token" type="hidden" value="' + $('meta[name="csrf-token"]').attr('content') + '">' +
-                        '<button class="btn btn-block text-nowrap btn-primary " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
+                        '<button class="btn col-12 text-nowrap btn-warning " onclick="if(!confirm(&#039;Are you sure to delete this item?&#039;)){return false;};" type="submit" value="Delete">Borrar <svg class="bi" width="24" height="24" fill="currentColor"><use xlink:href="/vendor/bootstrap/img/bootstrap-icons.svg#x-circle"/></svg></button>' +
                         '</form>');
             })
             .on('deselect', function (e, dt, type, indexes) {
