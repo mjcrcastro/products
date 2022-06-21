@@ -4,6 +4,7 @@
 <!-- Custom styles for this page -->
 <link rel="stylesheet" type="text/css" href="/vendor/datatables/css/dataTables.bootstrap4.min.css"/>
 <link href="/vendor/datatables/css/select.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
+<link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 @stop
 
 @section('main')
@@ -21,27 +22,25 @@
         </div>    
     </div>
     <div class="card py-4 px-4">
-        <table class="table display" id="productsTable" width="100%" cellspacing="0">
+        <table class="table order-column hover" id="productsTable" width="100%" cellspacing="0">
             <thead>
                 <tr >
                     <th></th>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
+                    <th >Código</th>
+                    <th >Descripción</th>
+                    <th >Precio</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th></th>
                     <th>Código</th>
-                    <th>Descripción</th>
+                    <th >Descripción</th>
                     <th>Precio</th>
                 </tr>
             </tfoot>
         </table>
     </div>
-
-
 
     <div class="card shadow mb-1">
         <div class="card-header py-3">
@@ -120,7 +119,7 @@ $(document).ready(function () {
                 "searchable": false
             }, {
                 "targets": [3],
-                "className": 'text-right',
+                "className": 'text-end',
                 "render": $.fn.dataTable.render.number(',', '.', 2, '')//formats the number
             }
         ],

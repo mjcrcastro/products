@@ -72,8 +72,8 @@
                     <tr >
                         <th></th>
                         <th></th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
+                        <th >Producto</th>
+                        <th class="text-end">Cantidad</th>
                         <th>Costo</th>
                     </tr>
                 </thead>
@@ -199,18 +199,18 @@ $(document).ready(function () {
             {
                 "targets": [2],
                 "visible": true,
-                "className": 'text-left'
+                "className": 'text-start'
             },
             {
                 "targets": [3],
                 "visible": true,
-                "className": 'text-right',
+                "className": 'text-end',
                 "render": $.fn.dataTable.render.number(',', '.', 2, '')//formats the number
             },
             {
                 "targets": [4],
                 "visible": true,
-                "className": 'text-right',
+                "className": 'text-end',
                 "render": $.fn.dataTable.render.number(',', '.', 2, '')//formats the number
             }
             

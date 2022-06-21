@@ -121,7 +121,7 @@ $(document).ready(function () {
             {
                 "targets": [4],
                 render: $.fn.dataTable.render.number(',', '.', 2, ''),
-                className: 'text-right'
+                className: 'text-end'
             }
         ],
         "columns": [//tells where (from data) the columns are to be placed
