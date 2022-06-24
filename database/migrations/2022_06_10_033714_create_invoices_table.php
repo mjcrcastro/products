@@ -15,6 +15,7 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
+            $table->increments('transaction_id')->references('id')->on('transactions');
             $table->bigInteger('invoicenumber_mobile');
             $table->integer('mobile_id')->default('1');
             $table->string('customername');
