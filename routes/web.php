@@ -50,4 +50,4 @@ Route::resource('buyers', BuyersController::class);
 Route::get('select_buyers_ajax',[App\Http\Controllers\BuyersController::class, 'buyersSelect2Json']);
 Route::get('buyers_index',[App\Http\Controllers\BuyersController::class, 'buyersAjax']);
 
-Route::resource('chart_of_account', \App\Http\Controllers\ChartOfAccountController::class);
+Route::get('header_test_get',[App\Http\Controllers\BuyersController::class, 'headerTesterGet']);

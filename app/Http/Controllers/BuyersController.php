@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use DB;
 use Response;
+use Illuminate\Support\Facades\Log;
 
 class BuyersController extends Controller
 {
@@ -159,5 +160,19 @@ class BuyersController extends Controller
         $results = array('results' => $buyers);
 
         return response()->json($results);
+    }
+    
+    public function headerTesterPost(Request $request) {
+        
+        $header = $request->header();
+        Log::info(print_r($header, true));
+        return $header;
+    }
+    
+    public function headerTesterGet(Request $request) {
+        
+        $header = $request->header();
+        Log::info(print_r($header, true));
+        return $header;
     }
 }

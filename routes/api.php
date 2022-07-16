@@ -21,3 +21,5 @@ use Illuminate\Support\Facades\Route;
 Route::post('invoice', [App\Http\Controllers\InvoicesController::class, 'receiveInvoicesJson']);
 
 Route::get('get_purchase/{id}', [App\Http\Controllers\PurchasesController::class, 'returnPurchase']);
+
+Route::post('header_test',[App\Http\Controllers\BuyersController::class, 'headerTesterPost']);
