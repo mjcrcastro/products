@@ -19,7 +19,7 @@ use App\Http\Controllers\BuyersController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('invoices.index');
 });
 //***************Products routes
 Route::resource('products', ProductsController::class);
